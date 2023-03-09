@@ -1,7 +1,7 @@
 import { redirect } from 'sveltekit-flash-message/server';
 import type { RequestEvent } from '@sveltejs/kit';
 import { errorMessage, successMessage } from '$lib/utils/message.utils';
-import { createModule } from '../../../../../../../../api/services/modules';
+import { createModule } from '../../../../../../api/services/modules';
 
 /////////////////////////////////////////////////////////////////////////
 

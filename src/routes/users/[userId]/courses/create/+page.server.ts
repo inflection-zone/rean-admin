@@ -1,7 +1,7 @@
 import { redirect } from 'sveltekit-flash-message/server';
 import type { RequestEvent } from '@sveltejs/kit';
 import { errorMessage, successMessage } from '$lib/utils/message.utils';
-import { createCourse } from '../../../../../../api/services/courses';
+import { createCourse } from '../../../../api/services/courses';
 
 /////////////////////////////////////////////////////////////////////////
 
@@ -9,7 +9,6 @@ export const actions = {
 	createCourseAction: async (event: RequestEvent) => {
 		const request = event.request;
 		const userId = event.params.userId;
-		const learningPathId = event.params.learningPathId
 		const data = await request.formData();
 
 		const name = data.has('name') ? data.get('name') : null;
@@ -19,7 +18,6 @@ export const actions = {
 
 		const response = await createCourse(
 			sessionId,
-			learningPathId,
 			name.valueOf() as string,
 			description.valueOf() as string,
 			imageUrl.valueOf() as string
@@ -31,7 +29,7 @@ export const actions = {
 		}
 		throw redirect(
 			303,
-			`/users/${userId}/learning-journeys/${learningPathId}/courses/${courseId}/view`,
+			`/users/${userId}/courses/${courseId}/view`,
 			successMessage(`course created successful!`),
 			event
 		);

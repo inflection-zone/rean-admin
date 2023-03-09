@@ -7,7 +7,8 @@
 	import { show } from '$lib/utils/message.utils';
 	import { LocalStorageUtils } from '$lib/utils/local.storage.utils';
 	import BreadCrumbs from '$lib/components/breadcrumbs/breadcrums.svelte';
-
+	import Image from '$lib/components/image.svelte';
+	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	export let data: PageServerData;
@@ -23,11 +24,10 @@
 	});
 
 	const userId = $page.params.userId;
-	const learningPathId = $page.params.learningPathId;
 	const courseId = $page.params.courseId ;
-	const editRoute = `/users/${userId}/learning-journeys/${learningPathId}/courses/${courseId}/edit`;
-	const viewRoute = `/users/${userId}/learning-journeys/${learningPathId}/courses/${courseId}/view`;
-	const courseRoute = `/users/${userId}/learning-journeys/${learningPathId}/courses`;
+	const editRoute = `/users/${userId}/courses/${courseId}/edit`;
+	const viewRoute = `/users/${userId}/courses/${courseId}/view`;
+	const courseRoute = `/users/${userId}/courses`;
 
 	const breadCrumbs = [
 		{
@@ -95,7 +95,12 @@
 						<span>Image</span>
 					</label>
 				</div>
-				<span class="span w-1/2 md:w-2/3 lg:w-2/3"> {imageUrl} </span>
+				{#if imageUrl === 'undefined'}
+					<span class="span">Not specified</span>
+					<!-- <img class="flex h-24 w-24 rounded-full" src={avatarSource} alt="d" /> -->
+				{:else}
+					<Image cls="flex h-24 w-24 rounded-full" source={imageUrl} w="24" h="24" />
+				{/if}
 			</div>
 
 			<div class="flex items-center my-4 lg:mx-16 md:mx-12 mx-10">

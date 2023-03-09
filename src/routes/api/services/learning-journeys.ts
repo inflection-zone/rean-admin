@@ -8,13 +8,15 @@ export const createLearningJourney = async (
 	name: string,
 	preferenceWeight: number,
 	description: string,
-	ImageUrl: string
+	imageUrl: string,
+	courseIds: string[],
 ) => {
 	const body = {
 		Name: name,
 		PreferenceWeight: preferenceWeight,
 		Description: description,
-		ImageUrl: ImageUrl
+		ImageUrl: imageUrl,
+		CourseIds: courseIds,
 	};
 	const url = BACKEND_API_URL + '/educational/learning-paths';
 	return await post_(sessionId, url, body, true);

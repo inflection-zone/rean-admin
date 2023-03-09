@@ -38,8 +38,8 @@ export const actions = {
 		const preferenceWeight = data.has('preferenceWeight') ? data.get('preferenceWeight') : null;
 		const description = data.has('description') ? data.get('description') : null;
 		const imageUrl = data.has('imageUrl') ? data.get('imageUrl') : null;
-		const courses = data.has('courses') ? data.getAll('courses') : null;
-		console.log("courses",courses);
+		const courseIds = data.has('courseIds') ? data.getAll('courseIds') : null;
+		console.log("courses",courseIds);
 		// const courses = values.getAll("ice-cream-flavors") as string[];
 		const sessionId = event.cookies.get('sessionId');
 
@@ -49,7 +49,7 @@ export const actions = {
 			preferenceWeight.valueOf() as number,
 			description.valueOf() as string,
 			imageUrl.valueOf() as string,
-			courses.valueOf() as string[]
+			courseIds.valueOf() as string[]
 		);
 		console.log("response",response.Data);
 		const learningPathId = response.Data.LearningPath.id;

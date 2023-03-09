@@ -15,7 +15,7 @@ export const load: PageServerLoad = async (event: RequestEvent) => {
 			throw error(response.HttpCode, response.Message);
 		}
 		const learningJourney = response.Data.LearningPath;
-		console
+		console.log("learningJourney",learningJourney);
 		const id = response.Data.LearningPath.id;
 		return {
 			location: `${id}/edit`,

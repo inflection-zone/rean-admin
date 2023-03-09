@@ -150,7 +150,7 @@
 				</div>
 				<div class="w-1/2 md:w-2/3 lg:w-2/3">
 					<select
-					 	name="courses"
+					 	name="courseIds"
 						class="select"
 						multiple
 						placeholder="Select course here..."

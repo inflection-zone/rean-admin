@@ -8,29 +8,27 @@
 	export let data: PageServerData;
 	let initiaData = {};
 	let id = data.course.id;
-	let name = data.course.name;
-	let learningJourney = data.course.learningJourney;
-	let description = data.course.description;
-	let image = data.course.image;
-	let modules = data.course.modules;
+	let name = data.course.Name;
+	let description = data.course.Description;
+	let imageUrl = data.course.ImageUrl;
+	let modules = data.course.Modules;
 
 	//Original data
 	let _name = name;
-	let _learningJourney = learningJourney;
 	let _description = description;
-	let _image = image;
+	let _imageUrl = imageUrl;
 
 	function handleReset() {
 		name = _name;
-		learningJourney = _learningJourney;
 		description = _description;
-		image = _image;
+		imageUrl = _imageUrl;
 	}
 
 	const userId = $page.params.userId;
-	const editRoute = `/users/${userId}/learning-journeys/courses/${id}/edit`;
-	const viewRoute = `/users/${userId}/learning-journeys/courses/${id}/view`;
-	const courseRoute = `/users/${userId}/learning-journeys/courses`;
+	const courseId = $page.params.courseId;
+	const editRoute = `/users/${userId}/courses/${courseId}/edit`;
+	const viewRoute = `/users/${userId}/courses/${courseId}/view`;
+	const courseRoute = `/users/${userId}/courses`;
 
 	const breadCrumbs = [
 		{
@@ -79,9 +77,9 @@
 					/>
 				</div>
 			</div>
-			<div class="flex items-center my-4  lg:mx-16 md:mx-12 mx-10">
+			<!-- <div class="flex items-center my-4  lg:mx-16 md:mx-12 mx-10">
 				<div class="w-1/2 md:w-1/3 lg:w-1/3 ">
-					<!-- svelte-ignore a11y-label-has-associated-control -->
+				
 					<label class="label">
 						<span>Learning Journey</span>
 					</label>
@@ -98,7 +96,7 @@
 						<option>Light mode</option>
 					</select>
 				</div>
-			</div>
+			</div> -->
 
 			<div class="flex items-center mb-2 lg:mx-16 md:mx-12 mx-10">
 				<div class="w-1/2 md:w-1/3 lg:w-1/3 ">

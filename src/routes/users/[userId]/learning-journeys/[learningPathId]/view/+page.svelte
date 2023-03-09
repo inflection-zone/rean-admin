@@ -98,7 +98,7 @@
 				</div>
 				<!-- <span class="span w-1/2 md:w-2/3 lg:w-2/3">{image}</span> -->
 				{#if imageUrl === 'undefined'}
-					<span class="span">Image</span>
+					<span class="span">Not Specified</span>
 					<!-- <img class="flex h-24 w-24 rounded-full" src={avatarSource} alt="d" /> -->
 				{:else}
 					<Image cls="flex h-24 w-24 rounded-md" source={imageUrl} w="24" h="24" />
@@ -109,7 +109,7 @@
 				<div class="w-1/2 md:w-1/3 lg:w-1/3 ">
 					<!-- svelte-ignore a11y-label-has-associated-control -->
 					<label class="label">
-						<span>Course</span>
+						<span>Courses</span>
 					</label>
 				</div>
 				<!-- <ol class="span w-1/2 md:w-2/3 lg:w-2/3 list-decimal ml-6" id="course">

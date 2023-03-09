@@ -5,13 +5,11 @@ import { delete_, get_, post_, put_ } from './common';
 
 export const createCourse = async (
 	sessionId: string,
-	learningPathId: string,
 	name: string,
 	description: string,
 	imageUrl: string
 ) => {
 	const body = {
-		LearningPathId: learningPathId,
 		Name: name,
 		Description: description,
 		ImageUrl: imageUrl
@@ -47,7 +45,6 @@ export const searchCourses = async (sessionId: string, searchParams?: any) => {
 
 export const updateCourse = async (
 	sessionId: string,
-	learningPathId: string,
 	courseId: string,
 	name: string,
 	// learningJourney: string,
@@ -55,7 +52,6 @@ export const updateCourse = async (
 	image: string
 ) => {
 	const body = {
-		learningPathId,
 		courseId,
 		Name: name,
 		// LearningJourney: learningJourney,

@@ -2,7 +2,7 @@ import { error, type RequestEvent } from '@sveltejs/kit';
 import { redirect } from 'sveltekit-flash-message/server';
 import { errorMessage, successMessage } from '$lib/utils/message.utils';
 import type { PageServerLoad } from './$types';
-import { getCourseById, updateCourse } from '../../../../../../../api/services/courses';
+import { getCourseById, updateCourse } from '../../../../../api/services/courses';
 
 /////////////////////////////////////////////////////////////////////////
 
@@ -29,33 +29,29 @@ export const actions = {
 	updateCourseAction: async (event: RequestEvent) => {
 		const request = event.request;
 		const userId = event.params.userId;
-		const learningPathId = event.params.learningPathId;
 		const courseId = event.params.courseId;
 		const sessionId = event.cookies.get('sessionId');
 		const data = await request.formData();
 
 		const name = data.has('name') ? data.get('name') : null;
-		// const learningJourney = data.has('learningJourney') ? data.get('learningJourney') : null;
 		const description = data.has('description') ? data.get('description') : null;
 		const imageUrl = data.has('imageUrl') ? data.get('imageUrl') : null;
 	
 		const response = await updateCourse(
 			sessionId,
-			learningPathId,
 			courseId,
 			name.valueOf() as string,
-			// learningJourney.valueOf() as string,
 			description.valueOf() as string,
 			imageUrl.valueOf() as string
 		);
 		const id = response.Data.Course.id;
 
 		if (response.Status === 'failure' || response.HttpCode !== 200) {
-			throw redirect(303, '/learning-journeys/courses', errorMessage(response.Message), event);
+			throw redirect(303, '/courses', errorMessage(response.Message), event);
 		}
 		throw redirect(
 			303,
-			`/users/${userId}/learning-journeys/${learningPathId}/courses/${id}/view`,
+			`/users/${userId}/courses/${id}/view`,
 			successMessage(`course updated successful!`),
 			event
 		);
