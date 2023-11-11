@@ -18,6 +18,7 @@ export const load: PageServerLoad = async (event: RequestEvent) => {
 		const imageResourceId = organization.ImageResourceId;
 
 		const id = response.Data.Organization.id;
+		console.log("organization", organization.Adresseses);
 
 		if (imageResourceId) {
 			organization['ImageUrl'] =

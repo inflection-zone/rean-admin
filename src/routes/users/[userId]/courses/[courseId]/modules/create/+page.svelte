@@ -1,9 +1,8 @@
 <script lang="ts">
-	import Fa from 'svelte-fa';
-	import { faMultiply } from '@fortawesome/free-solid-svg-icons';
-	import BreadCrumbs from '$lib/components/breadcrumbs/breadcrums.svelte';
 	import { page } from '$app/stores';
+	import BreadCrumbs from '$lib/components/breadcrumbs/breadcrums.svelte';
 	import { showMessage } from '$lib/utils/message.utils';
+	import Icon from '@iconify/svelte';
 
 	/////////////////////////////////////////////////////////////////////////////////////////
 
@@ -76,147 +75,104 @@
 	};
 </script>
 
-<main class="h-screen mb-10">
-	<BreadCrumbs crumbs={breadCrumbs} />
+<BreadCrumbs crumbs={breadCrumbs} />
 
-	<div>
-		<form
-			method="post"
-			action="?/createModuleAction"
-			class="w-full  bg-[#ECE4FC] lg:mt-10 md:mt-8 sm:mt-6 mb-10 mt-4 lg:max-w-4xl md:max-w-xl sm:max-w-lg  rounded-lg mx-auto"
-		>
-			<div class="w-full  h-14 rounded-t-lg p-3  bg-[#7165E3]">
-				<div class="ml-3 relative flex flex-row text-white text-xl">
-					Create Module
-					<a href={moduleRoute}>
-						<Fa
-							icon={faMultiply}
-							size="lg"
-							class="absolute right-0 lg:pr-3 md:pr-2 pr-0 text-white"
-						/>
+<form
+	method="post"
+	action="?/createModuleAction"
+	class="table-container my-2 border border-secondary-100 dark:!border-surface-700"
+>
+	<table class="table">
+		<thead class="!variant-soft-secondary">
+			<tr>
+				<th>Create Module</th>
+				<th class="text-end">
+					<a href={moduleRoute} class="btn p-2 -my-2 variant-soft-secondary">
+						<Icon icon="material-symbols:close-rounded" class="text-lg" />
 					</a>
-				</div>
-			</div>
-
-			<div class="flex items-center mb-4 mt-10 lg:mx-16 md:mx-12 mx-10">
-				<div class="w-1/2 md:w-1/3 lg:w-1/3 ">
-					<!-- svelte-ignore a11y-label-has-associated-control -->
-					<label class="label">
-						<span>Name *</span>
-					</label>
-				</div>
-				<div class="w-1/2 md:w-2/3 lg:w-2/3">
+				</th>
+			</tr>
+		</thead>
+		<tbody class="!bg-white dark:!bg-inherit">
+			<tr class="!border-b !border-b-secondary-100 dark:!border-b-surface-700">
+				<td>Name *</td>
+				<td>
 					<input
 						type="text"
 						name="name"
 						required
 						placeholder="Enter name here..."
-						class="input w-full {form?.errors?.name
-							? 'border-error-300 text-error-500'
-							: 'border-primary-200 text-primary-500'}"
-						value={form?.data?.name ?? ''}
+						class="input w-full {form?.errors?.name ? 'border-error-300 text-error-500' : ''}"
 					/>
 					{#if form?.errors?.name}
 						<p class="text-error-500 text-xs">{form?.errors?.name[0]}</p>
 					{/if}
-				</div>
-			</div>
-			<div class="flex items-center mb-2 lg:mx-16 md:mx-12 mx-10">
-				<div class="w-1/2 md:w-1/3 lg:w-1/3 ">
-					<!-- svelte-ignore a11y-label-has-associated-control -->
-					<label class="label">
-						<span>Description</span>
-					</label>
-				</div>
-				<div class="w-1/2 md:w-2/3 lg:w-2/3">
+				</td>
+			</tr>
+			<tr class="!border-b !border-b-secondary-100 dark:!border-b-surface-700">
+				<td class="align-top">Description</td>
+				<td>
 					<textarea
 						name="description"
-						placeholder="Enter  description here..."
-						class="textarea w-full {form?.errors?.description
+						placeholder="Enter description here..."
+						class="textarea w-full  {form?.errors?.description
 							? 'border-error-300 text-error-500'
-							: 'border-primary-200 text-primary-500'}"
+							: ''}"
 					/>
 					{#if form?.errors?.description}
 						<p class="text-error-500 text-xs">{form?.errors?.description[0]}</p>
 					{/if}
-				</div>
-			</div>
-
-			<div class="flex items-center mb-4 mt-2 lg:mx-16 md:mx-12 mx-10">
-				<div class="w-1/2 md:w-1/3 lg:w-1/3 ">
-					<!-- svelte-ignore a11y-label-has-associated-control -->
-					<label class="label">
-						<span>Duration In Mins</span>
-					</label>
-				</div>
-				<div class="w-1/2 md:w-2/3 lg:w-2/3">
+				</td>
+			</tr>
+			<tr class="!border-b !border-b-secondary-100 dark:!border-b-surface-700">
+				<td>Duration In Minutes</td>
+				<td>
 					<input
 						type="number"
 						name="durationInMins"
 						placeholder="Enter duration here..."
+						min="1"
 						class="input w-full {form?.errors?.durationInMins
 							? 'border-error-300 text-error-500'
-							: 'border-primary-200 text-primary-500'}"
-						value={form?.data?.durationInMins ?? ''}
+							: ''}"
 					/>
 					{#if form?.errors?.durationInMins}
 						<p class="text-error-500 text-xs">{form?.errors?.durationInMins[0]}</p>
 					{/if}
-				</div>
-			</div>
-
-			<div class="flex items-center my-4 lg:mx-16 md:mx-12 mx-10">
-				<div class="w-1/2 md:w-1/3 lg:w-1/3 ">
-					<!-- svelte-ignore a11y-label-has-associated-control -->
-					<label class="label">
-						<span>Sequence</span>
-					</label>
-				</div>
-				<div class="w-1/2 md:w-2/3 lg:w-2/3">
+				</td>
+			</tr>
+			<tr class="!border-b !border-b-secondary-100 dark:!border-b-surface-700">
+				<td>Sequence*</td>
+				<td>
 					<input
 						type="number"
 						name="sequence"
 						placeholder="Enter sequence here..."
-						class="input w-full {form?.errors?.sequence
-							? 'border-error-300 text-error-500'
-							: 'border-primary-200 text-primary-500'}"
-						value={form?.data?.sequence ?? ''}
+						min="1"
+						required
+						class="input w-full {form?.errors?.sequence ? 'border-error-300 text-error-500' : ''}"
 					/>
 					{#if form?.errors?.sequence}
 						<p class="text-error-500 text-xs">{form?.errors?.sequence[0]}</p>
 					{/if}
-				</div>
-			</div>
-
-			<div class="flex items-center my-4 lg:mx-16 md:mx-12 mx-10">
-				<div class="w-1/2 md:w-1/3 lg:w-1/3 ">
-					<!-- svelte-ignore a11y-label-has-associated-control -->
-					<label class="label">
-						<span>Image</span>
-					</label>
-				</div>
-				<div class="flex flex-row gap-8 w-1/2 md:w-2/3 lg:w-2/3 ">
+				</td>
+			</tr>
+			<tr class="!border-b !border-b-secondary-100 dark:!border-b-surface-700">
+				<td>Image</td>
+				<td>
 					<input
-						name="fileInput"
+						name="fileinput"
 						type="file"
-						id="fileUpload"
-						class="input w-full"
+						class="true input w-full"
 						placeholder="Image"
 						on:change={async (e) => await onFileSelected(e)}
 					/>
 					<input type="hidden" name="imageUrl" value={imageUrl} />
-					{#if form?.errors?.imageUrl}
-						<p class="text-error-500 text-xs">{form?.errors?.imageUrl[0]}</p>
-					{/if}
-				</div>
-			</div>
-
-			<div class="flex items-center mt-7 lg:mx-16 md:mx-12 mr-10">
-				<div class="w-3/4" />
-				<div class="w-1/4 ">
-					<button type="submit" class="btn variant-filled-primary w-full mb-10 "> Submit </button>
-				</div>
-			</div>
-		</form>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="flex p-2 justify-end">
+		<button type="submit" class="btn variant-filled-secondary">Submit</button>
 	</div>
-</main>
+</form>

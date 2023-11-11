@@ -17,6 +17,7 @@ export const load: PageServerLoad = async (event: RequestEvent) => {
 		const newsfeed = response.Data.Rssfeed;
 		const id = response.Data.Rssfeed.id;
 		return {
+			sessionId,
 			location: `${id}/edit`,
 			newsfeed,
 			message: response.Message

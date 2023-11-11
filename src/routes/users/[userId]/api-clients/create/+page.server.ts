@@ -50,7 +50,7 @@ export const actions = {
 		throw redirect(
 			303,
 			`/users/${userId}/api-clients/${id}/view`,
-			successMessage(`Api client created successfully !`),
+			successMessage(`Api client created successfully!`),
 			event
 		);
 	}

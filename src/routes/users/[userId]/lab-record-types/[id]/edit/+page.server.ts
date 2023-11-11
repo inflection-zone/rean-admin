@@ -91,7 +91,7 @@ export const actions = {
 		throw redirect(
 			303,
 			`/users/${userId}/lab-record-types/${id}/view`,
-			successMessage(`Lab record type updated successfully !`),
+			successMessage(`Lab record updated successfully!`),
 			event
 		);
 	}

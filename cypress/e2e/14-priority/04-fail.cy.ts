@@ -25,15 +25,9 @@ describe('test', () => {
       cy.wait(2000)
       cy.get('input[name=type]').type('sdvdvd')
       cy.wait(2000)
-      // cy.get('input[name=tags]').type('Auto')
-      // cy.wait(2000)
       cy.get('button[type=submit]').click()
-      cy.wait(2000)
-      cy.get('button[type=submit]').click()
-      cy.wait(2000)
-      cy.get('button[type=submit]').click()
-      cy.wait(2000)
-      cy.get(':nth-child(1) > .text-primary-primary-500').click()
+      cy.wait(7000)
+      cy.contains('Priorities').click()
     })
 	});
  

@@ -22,6 +22,7 @@ export const load: PageServerLoad = async (event: RequestEvent) => {
 		const assessmentTemplate = response.Data.AssessmentTemplate;
 		const assessmentNodes = _assessmentNodes.Data.AssessmentNodeRecords.Items;
 		const id = response.Data.AssessmentTemplate.id;
+		console.log("assessmentTemplate", assessmentTemplate)
 		return {
 			location: `${id}/edit`,
 			assessmentTemplate,

@@ -19,9 +19,9 @@ describe('test', () => {
       // eslint-disable-next-line no-useless-escape
       cy.contains('Types').click()
       cy.wait(2000)
-      cy.contains('Person-Role').click()
+      cy.contains('Person Role').click()
       cy.wait(2000)
-      cy.get('.absolute > .btn').click()
+      cy.contains('Add New').click()
       cy.wait(2000)
       cy.get('input[name=roleName]').type('Doctor')
       cy.wait(2000)
@@ -29,11 +29,11 @@ describe('test', () => {
       cy.wait(2000)
       cy.get('button[type=submit]').click()
       cy.wait(2000)
-      cy.get('button[type=submit]').click()
+      cy.contains('Edit').click()
       cy.wait(2000)
       cy.get('button[type=submit]').click()
       cy.wait(2000)
-      cy.get(':nth-child(1) > .text-primary-primary-500').click()
+      cy.contains('Person-Role').click()
     })
 	});
  

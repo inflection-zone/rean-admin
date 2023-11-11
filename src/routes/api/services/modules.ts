@@ -63,10 +63,12 @@ export const updateModule = async (
 		CourseId: courseId,
 		Name: name,
 		Description: description ? description : null,
-		DurationInMins: durationInMins ? durationInMins : null,
+		DurationInMins: durationInMins,
 		ImageUrl: imageUrl ? imageUrl : null,
 		Sequence: sequence ? sequence : null
 	};
+
+	console.log("body",body)
 	const url = BACKEND_API_URL + `/educational/course-modules/${moduleId}`;
 	return await put_(sessionId, url, body, true);
 };

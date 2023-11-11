@@ -22,7 +22,7 @@ describe('test', () => {
       // eslint-disable-next-line no-useless-escape
       cy.contains('Organizations').click()
       cy.wait(2000)
-      cy.get('.absolute > .btn').click()
+      cy.contains('Add New').click()
       cy.wait(2000)
       cy.get('input[name=name]').type('or')
       cy.wait(2000)
@@ -42,20 +42,17 @@ describe('test', () => {
       cy.wait(2000)
       cy.get('select[name=state]').select('Maharashtra')
       cy.wait(2000)
-      cy.get('select[name=country]').select('India')
+      cy.get('input[name=country]').type('India')
       cy.wait(2000)
       cy.get('input[name=postalCode').type('412301')
       cy.wait(2000)
       cy.get('input[name=fileinput]').attachFile(filePath)
       cy.wait(2000)
-      // cy.get('input[name=isHealthFacility').check().should('be.checked')
-      // cy.wait(2000)
-      cy.get('button[type=submit]').click()
+      cy.get('input[name=isHealthFacility').check().should('be.checked')
       cy.wait(2000)
-      
       cy.get('button[type=submit]').click()
-      cy.wait(2000)
-      // cy.get(':nth-child(1) > .text-primary-primary-500').click()
+      cy.wait(7000)
+      cy.contains('Organizations').click()
     })
 	});
  

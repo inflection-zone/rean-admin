@@ -1,12 +1,11 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import type { PageServerData } from './$types';
-	import Fa from 'svelte-fa';
-	import { faMultiply } from '@fortawesome/free-solid-svg-icons';
-	import date from 'date-and-time';
 	import BreadCrumbs from '$lib/components/breadcrumbs/breadcrums.svelte';
 	import Image from '$lib/components/image.svelte';
 	import { showMessage } from '$lib/utils/message.utils';
+	import Icon from '@iconify/svelte';
+	import date from 'date-and-time';
+	import type { PageServerData } from './$types';
 
 	/////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -95,78 +94,55 @@
 	};
 </script>
 
-<main class="h-screen mb-10">
-	<BreadCrumbs crumbs={breadCrumbs} />
+<BreadCrumbs crumbs={breadCrumbs} />
 
-	<div class="">
-		<form
-			method="post"
-			action="?/updateNotificationAction"
-			class="w-full  bg-[#ECE4FC] lg:mt-10 md:mt-8 sm:mt-6 mb-10 mt-4 lg:max-w-4xl md:max-w-xl sm:max-w-lg  rounded-lg mx-auto"
-		>
-			<div class="w-full  h-14 rounded-t-lg p-3  bg-[#7165E3]">
-				<div class="ml-3 relative flex flex-row text-white text-xl">
-					Edit Notification
-					<a href={viewRoute}>
-						<Fa icon={faMultiply} size="lg" class="absolute right-0 pr-3 mb-16 text-white " />
+<form
+	method="post"
+	action="?/updateNotificationAction"
+	class="table-container my-2 border border-secondary-100 dark:!border-surface-700"
+>
+	<table class="table">
+		<thead class="!variant-soft-secondary">
+			<tr>
+				<th>Edit Notification</th>
+				<th class="text-end">
+					<a href={viewRoute} class="btn p-2 -my-2 variant-soft-secondary">
+						<Icon icon="material-symbols:close-rounded" class="text-lg" />
 					</a>
-				</div>
-			</div>
-
-			<div class="flex items-center mb-4 mt-10 lg:mx-16 md:mx-12 mx-10">
-				<div class="w-1/2 md:w-1/3 lg:w-1/3 ">
-					<!-- svelte-ignore a11y-label-has-associated-control -->
-					<label class="label">
-						<span>Title</span>
-					</label>
-				</div>
-				<div class="w-1/2 md:w-2/3 lg:w-2/3">
+				</th>
+			</tr>
+		</thead>
+		<tbody class="!bg-white dark:!bg-inherit">
+			<tr class="!border-b !border-b-secondary-100 dark:!border-b-surface-700">
+				<td>Title *</td>
+				<td>
 					<input
 						type="text"
 						name="title"
+						required
 						bind:value={title}
 						placeholder="Enter title here..."
-						class="input w-full {form?.errors?.title
-							? 'border-error-300 text-error-500'
-							: 'border-primary-200 text-primary-500'}"
+						class="input w-full {form?.errors?.title ? 'border-error-300 text-error-500' : ''}"
 					/>
 					{#if form?.errors?.title}
 						<p class="text-error-500 text-xs">{form?.errors?.title[0]}</p>
 					{/if}
-				</div>
-			</div>
-
-			<div class="flex items-center mb-4 lg:mx-16 md:mx-12 mx-10">
-				<div class="w-1/2 md:w-1/3 lg:w-1/3 ">
-					<!-- svelte-ignore a11y-label-has-associated-control -->
-					<label class="label">
-						<span>Body</span>
-					</label>
-				</div>
-				<div class="w-1/2 md:w-2/3 lg:w-2/3">
-					<input
-						type="text"
+				</td>
+			</tr>
+			<tr class="!border-b !border-b-secondary-100 dark:!border-b-surface-700">
+				<td class="align-top">Body</td>
+				<td>
+					<textarea
 						name="body"
 						bind:value={Body}
 						placeholder="Enter body here..."
-						class="input w-full  {form?.errors?.body
-							? 'border-error-300 text-error-500'
-							: 'border-primary-200 text-primary-500'}"
+						class="textarea"
 					/>
-					{#if form?.errors?.body}
-						<p class="text-error-500 text-xs">{form?.errors?.body[0]}</p>
-					{/if}
-				</div>
-			</div>
-
-			<div class="flex items-center mb-4 lg:mx-16 md:mx-12 mx-10">
-				<div class="w-1/2 md:w-1/3 lg:w-1/3 ">
-					<!-- svelte-ignore a11y-label-has-associated-control -->
-					<label class="label">
-						<span>Type</span>
-					</label>
-				</div>
-				<div class="w-1/2 md:w-2/3 lg:w-2/3">
+				</td>
+			</tr>
+			<tr class="!border-b !border-b-secondary-100 dark:!border-b-surface-700">
+				<td>Type</td>
+				<td>
 					<select
 						class="select w-full"
 						name="type"
@@ -174,56 +150,36 @@
 						placeholder="select type here..."
 					>
 						<option>General</option>
-						<option>Auto</option>
-						<option>Dark mode</option>
-						<option>Light mode</option>
+						<option value="Email">Email</option>
+						<option value="SMS">SMS</option>
+						<option value="WebPush">Web Push</option>
+						<option value="MobilePush">Mobile Push</option>
+						<option value="Webhook">Webhook</option>
+						<option value="WhatsApp">Whats App</option>
+						<option value="Telegram">Telegram</option>
+						<option value="Slack">Slack</option>
 					</select>
-				</div>
-			</div>
-
-			<div class="flex items-center mb-4 lg:mx-16 md:mx-12 mx-10">
-				<div class="w-1/2 md:w-1/3 lg:w-1/3 ">
-					<!-- svelte-ignore a11y-label-has-associated-control -->
-					<label class="label">
-						<span>Sent On</span>
-					</label>
-				</div>
-				<span class="span w-1/2 md:2/3 lg:2/3" id="sentOn"
-					>{date.format(sentOn, 'DD MMM YYYY')}</span
-				>
-			</div>
-
-			<div class="flex items-center mb-4 lg:mx-16 md:mx-12 mx-10">
-				<div class="w-1/2 md:w-1/3 lg:w-1/3 ">
-					<!-- svelte-ignore a11y-label-has-associated-control -->
-					<label class="label">
-						<span>Broadcast To All</span>
-					</label>
-				</div>
-				<div class="w-1/2 md:w-2/3 lg:w-2/3">
-					<label class="label cursor-pointer">
-						<input
-							type="checkbox"
-							name="broadcastToAll"
-							bind:value={broadcastToAll}
-							bind:checked={broadcastToAll}
-							class="checkbox checkbox-primary border-primary-200 hover:border-primary-400 checkbox-md ml-2"
-						/>
-						{#if form?.errors?.broadcastToAll}
-							<p class="text-error-500 text-xs">{form?.errors?.broadcastToAll[0]}</p>
-						{/if}
-					</label>
-				</div>
-			</div>
-
-			<div class="flex items-start my-2 lg:mx-16 md:mx-12 mx-10">
-				<div class="w-1/2 md:w-1/3 lg:w-1/3 ">
-					<!-- svelte-ignore a11y-label-has-associated-control -->
-					<label class="label">
-						<span>Image</span>
-					</label>
-				</div>
-				<div class="flex flex-row gap-4 w-1/2 md:w-2/3 lg:w-2/3 ">
+				</td>
+			</tr>
+			<tr class="!border-b !border-b-secondary-100 dark:!border-b-surface-700">
+				<td>Sent On</td>
+				<td>{date.format(sentOn, 'DD MMM YYYY')}</td>
+			</tr>
+			<tr class="!border-b !border-b-secondary-100 dark:!border-b-surface-700">
+				<td>Broadcast To All</td>
+				<td>
+					<input
+						type="checkbox"
+						name="broadcastToAll"
+						bind:value={broadcastToAll}
+						bind:checked={broadcastToAll}
+						class="checkbox checkbox-primary border-primary-200 hover:border-primary-400 checkbox-md ml-2"
+					/>
+				</td>
+			</tr>
+			<tr class="!border-b !border-b-secondary-100 dark:!border-b-surface-700">
+				<td class="align-top">Image</td>
+				<td>
 					{#if imageUrl === 'undefined'}
 						<input
 							name="fileinput"
@@ -233,7 +189,7 @@
 							on:change={async (e) => await onFileSelected(e)}
 						/>
 					{:else}
-						<Image cls="flex h-24 w-24 rounded-lg" source={imageUrl} w="24" h="24" />
+						<Image cls="flex h-24 w-24 rounded-lg mb-2" source={imageUrl} w="24" h="24" />
 						<input
 							name="fileinput"
 							type="file"
@@ -243,28 +199,12 @@
 						/>
 					{/if}
 					<input type="hidden" name="imageUrl" value={imageUrl} />
-				</div>
-			</div>
-
-			<div class="flex items-center my-8 lg:mx-16 md:mx-12 mx-4 ">
-				<div class="lg:w-1/2 md:w-1/2 sm:w-1/2  w-1/3" />
-				<div class="lg:w-1/4 md:w-1/4 sm:w-1/4  w-1/3 ">
-					<button
-						type="button"
-						on:click={handleReset}
-						class="btn variant-ringed-primary text-primary-500 lg:w-40 lg:ml-8 md:ml-6 sm:ml-1 mb-10"
-					>
-						Reset</button
-					>
-				</div>
-				<div class="lg:w-1/4 md:w-1/4 sm:w-1/4 w-1/3">
-					<button
-						type="submit"
-						class="btn variant-filled-primary lg:w-40 lg:ml-8 md:ml-6 sm:ml-2 mb-10"
-						>Submit
-					</button>
-				</div>
-			</div>
-		</form>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="flex gap-2 p-2 justify-end">
+		<button type="button" on:click={handleReset} class="btn variant-soft-secondary">Reset</button>
+		<button type="submit" class="btn variant-filled-secondary">Submit</button>
 	</div>
-</main>
+</form>

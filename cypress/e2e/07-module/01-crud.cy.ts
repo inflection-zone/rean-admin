@@ -22,7 +22,7 @@ describe('test', () => {
       cy.wait(2000)
       cy.contains('Courses').click()
       cy.wait(2000)
-      cy.get('.absolute > .btn').click()
+      cy.contains('Add New').click()
       cy.wait(2000)
       cy.get('input[name=name]').type('cname')
       cy.wait(2000)
@@ -36,7 +36,9 @@ describe('test', () => {
       cy.wait(2000)
       cy.get('input[name=durationInMins]').type('90')
       cy.wait(2000)
-      cy.get('input[name=fileInput]').attachFile(filePath)
+      cy.get('input[name=sequence]').type('40')
+      cy.wait(2000)
+      cy.get('input[name=fileinput]').attachFile(filePath)
       cy.wait(2000)
       cy.get('button[type=submit]').click()
       cy.wait(2000)
@@ -46,7 +48,7 @@ describe('test', () => {
       cy.wait(2000)
       cy.contains('Courses').click()
       cy.wait(2000)
-      cy.get(':nth-child(1) > .text-primary-primary-500').click()
+      cy.contains('Courses').click()
     })
 	});
  

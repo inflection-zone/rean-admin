@@ -15,6 +15,9 @@ export const createNewsfeedItem = async (
 	authorLink: string,
 	image: string
 ) => {
+	if (image === 'undefined') {
+		image = null;
+	}
 	const body = {
 		FeedId: newsfeedId,
 		Title: title,
@@ -24,8 +27,9 @@ export const createNewsfeedItem = async (
 		AuthorName: authorName ? authorName : null,
 		AuthorEmail: authorEmail ? authorEmail : null,
 		AuthorLink: authorLink ? authorLink : null,
-		Image: image ? image : null
+		Image: image
 	};
+	console.log("body", body)
 	const url = BACKEND_API_URL + '/rss-feeds/feed-items';
 	return await post_(sessionId, url, body, true);
 };

@@ -4,7 +4,7 @@ import login from '../pageObjects/login/login-test';
 
 describe('test', () => {
 	it.only('LoginTest', function () {
-    const filePath = 'image.jpg';
+    const filePath = 'image1.jpg';
 		cy.visit('http://localhost:5173/');
 
 		cy.fixture('login').then((data) => {
@@ -22,21 +22,21 @@ describe('test', () => {
       cy.wait(2000)
       cy.contains('Symptoms').click()
       cy.wait(2000)
-      cy.get('.absolute > .btn').click()
+      cy.contains('Add New').click()
       cy.wait(2000)
-      cy.get('input[name=symptom]').type('vsdfvds')
+      cy.get('input[name=symptom]').type('symptom')
       cy.wait(2000)
-      cy.get('input[name=language]').type('egerger')
+      cy.get('input[name=language]').type('en-US')
       cy.wait(2000)
       cy.get('input[name=fileinput]').attachFile(filePath)
       cy.wait(2000)
       cy.get('button[type=submit]').click()
       cy.wait(2000)
-      cy.get('button[type=submit]').click()
+      cy.contains('Edit').click()
       cy.wait(2000)
       cy.get('button[type=submit]').click()
       cy.wait(2000)
-      cy.get(':nth-child(1) > .text-primary-primary-500').click()
+      cy.contains('Symptoms').click()
     })
 	});
  

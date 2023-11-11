@@ -49,7 +49,7 @@ export const actions = {
 		throw redirect(
 			303,
 			`/users/${userId}/person-role-types/${id}/view`,
-			successMessage(`Person role type created successfully !`),
+			successMessage(`Person role type created successfully!`),
 			event
 		);
 	}

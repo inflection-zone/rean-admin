@@ -62,7 +62,7 @@ export const actions = {
 		throw redirect(
 			303,
 			`/users/${userId}/newsfeeds/${newsfeedId}/newsfeed-items/${newsfeedItemId}/view`,
-			successMessage(`Newsfeed item created successfully !`),
+			successMessage(`Newsfeed item created successfully!`),
 			event
 		);
 	}

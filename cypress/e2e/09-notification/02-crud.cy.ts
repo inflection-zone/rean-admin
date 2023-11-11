@@ -22,11 +22,11 @@ describe('test', () => {
       // eslint-disable-next-line no-useless-escape
       cy.contains('Notifications').click()
       cy.wait(2000)
-      cy.get('.absolute > .btn').click()
+      cy.contains('Add New').click()
       cy.wait(2000)
       cy.get('input[name=title]').type('You can now limit credit card numbers by card type and country.')
       cy.wait(2000)
-      cy.get('input[name=body]').type('Lorem ipsum dolor sit amet, consectetur adipiscing elit.')
+      cy.get('textarea[name=body]').type('Lorem ipsum dolor sit amet, consectetur adipiscing elit.')
       cy.wait(2000)
       cy.get('select[name=type]').select('Auto')
       cy.wait(2000)
@@ -40,7 +40,7 @@ describe('test', () => {
       cy.wait(2000)
       cy.get('button[type=submit]').click()
       cy.wait(2000)
-      cy.get(':nth-child(1) > .text-primary-primary-500').click()
+      cy.contains('Notifications').click()
     })
 	});
  

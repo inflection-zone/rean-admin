@@ -62,7 +62,7 @@ export const actions = {
 		throw redirect(
 			303,
 			`/users/${userId}/notices/${id}/view`,
-			successMessage(`Notice created successfully !`),
+			successMessage(`Notice created successfully!`),
 			event
 		);
 	}

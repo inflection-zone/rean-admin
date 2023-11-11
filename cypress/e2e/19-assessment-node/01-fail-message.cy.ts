@@ -21,7 +21,7 @@ describe('test', () => {
       // eslint-disable-next-line no-useless-escape
       cy.contains('Assessments').click()
       cy.wait(2000)  
-      cy.get('.absolute > .btn').click()
+      cy.contains('Add New').click()
       cy.wait(2000)
       cy.get('input[name=title]').type('rbgfb')
       cy.wait(2000)
@@ -29,7 +29,7 @@ describe('test', () => {
       cy.wait(2000)
       cy.get('button[type=submit]').click()
       cy.wait(2000)
-      cy.contains('Assessment Nodes').click()
+      cy.contains('Add Assessment Node').click()
       cy.wait(2000)
       cy.get('select[name=nodeType]').select('Message')
       cy.wait(2000)
@@ -39,7 +39,11 @@ describe('test', () => {
       cy.wait(2000)
       cy.get('textarea[name=description]').type('gbtbybgrv')
       cy.wait(2000)
-      cy.get('button[type=submit]').click() 
+      cy.get('button[type=submit]').click()
+      cy.wait(7000)
+      cy.contains('Assessment-Nodes').click()
+      cy.wait(5000)
+      cy.contains('Assessments').click()  
     })
 	});
  

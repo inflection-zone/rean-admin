@@ -1,46 +1,96 @@
 <script lang="ts">
-	import Fa from 'svelte-fa';
-	import { createDataTableStore, dataTableHandler } from '@skeletonlabs/skeleton';
-	import { Paginator } from '@skeletonlabs/skeleton';
 	import { page } from '$app/stores';
 	import BreadCrumbs from '$lib/components/breadcrumbs/breadcrums.svelte';
 	import Confirm from '$lib/components/modal/confirmModal.svelte';
-	import { faSearch, faTrash, faPencil } from '@fortawesome/free-solid-svg-icons';
+	import Icon from '@iconify/svelte';
+	import { Paginator, type PaginationSettings} from '@skeletonlabs/skeleton';
 	import type { PageServerData } from './$types';
+	import { browser } from '$app/environment';
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	export let data: PageServerData;
-	const module = data.module;
+	let modules = data.modules.Items;
 
 	const userId = $page.params.userId;
 	const courseId = $page.params.courseId;
 	const moduleRoute = `/users/${userId}/courses/${courseId}/modules`;
 	const createRoute = `/users/${userId}/courses/${courseId}/modules/create`;
 
-	const breadCrumbs = [
-		{
-			name: 'Modules',
-			path: moduleRoute
-		}
-	];
+	const breadCrumbs = [{ name: 'Modules', path: moduleRoute }];
 
-	const dataTableStore = createDataTableStore(
-		// Pass your source data here:
-		module,
-		{
-			// The current search term.
-			search: '',
-			// The current sort key.
-			sort: '',
-			// Paginator component settings.
-			pagination: { offset: 0, limit: 10, size: 0, amounts: [10, 20, 30, 50] }
-		}
+	// const dataTableStore = createDataTableStore(
+	// 	// Pass your source data here:
+	// 	module,
+	// 	{
+	// 		// The current search term.
+	// 		search: '',
+	// 		// The current sort key.
+	// 		sort: '',
+	// 		// Paginator component settings.
+	// 		pagination: { offset: 0, limit: 10, size: 0, amounts: [10, 20, 30, 50] }
+	// 	}
+	// );
+	// // This automatically handles search, sort, etc when the model updates.
+	// dataTableStore.subscribe((model) => dataTableHandler(model));
+
+	// dataTableStore.updateSource(module);
+	let name = undefined;
+	let sortBy = 'Name';
+	let sortOrder = 'ascending';
+	let itemsPerPage = 10;
+	let offset = 0;
+	let totalModuleCount = data.modules.TotalCount;
+	let isSortingName = false;
+	let items = 10;
+
+	let paginationSettings = {
+		page: 0,
+		limit: 10,
+		size: totalModuleCount,
+		amounts: [10, 20, 30, 50]
+	} satisfies PaginationSettings;
+
+	async function searchCourseModule(model) {
+		let url = `/api/server/modules/search?`;
+		if (sortOrder) url += `sortOrder=${sortOrder}`;
+		else url += `sortOrder=ascending`;
+
+		if (sortBy) url += `&sortBy=${sortBy}`;
+		if (itemsPerPage) url += `&itemsPerPage=${itemsPerPage}`;
+		if (offset) url += `&pageIndex=${offset}`;
+		if (name) url += `&name=${name}`;
+		const res = await fetch(url, {
+			method: 'GET',
+			headers: { 'content-type': 'application/json' }
+		});
+		const response = await res.json();
+		modules = response.map((item, index) => ({ ...item, index: index + 1 }));
+	}
+
+	$: retrivedCourseModule = modules.slice(
+		paginationSettings.page * paginationSettings.limit,
+		paginationSettings.page * paginationSettings.limit + paginationSettings.limit
 	);
-	// This automatically handles search, sort, etc when the model updates.
-	dataTableStore.subscribe((model) => dataTableHandler(model));
 
-	dataTableStore.updateSource(module);
+	$: if (browser)
+	searchCourseModule({
+			name: name,
+			itemsPerPage: itemsPerPage,
+			pageIndex: offset,
+			sortOrder: sortOrder,
+			sortBy: sortBy
+		});
+
+	function onPageChange(e: CustomEvent): void {
+		let pageIndex = e.detail;
+		itemsPerPage = items * (pageIndex + 1);
+	}
+
+	function onAmountChange(e: CustomEvent): void {
+		itemsPerPage = e.detail;
+		items = itemsPerPage;
+	}
 
 	const handleModuleDelete = async (e, id) => {
 		const moduleId = id;
@@ -55,133 +105,78 @@
 		const response = await fetch(`/api/server/modules`, {
 			method: 'DELETE',
 			body: JSON.stringify(model),
-			headers: {
-				'content-type': 'application/json'
-			}
+			headers: { 'content-type': 'application/json' }
 		});
 	}
 </script>
 
 <BreadCrumbs crumbs={breadCrumbs} />
 
-<div
-	class=" mr-14 mt-8 lg:flex-row md:flex-row sm:flex-col flex-col lg:block md:block sm:hidden hidden"
->
-	<div class="basis-1/2 justify-center items-center ">
-		<div class="relative flex items-center  " />
-	</div>
-	<div class="basis-1/2 justify-center items-center">
-		<div class="relative flex items-center">
-			<a href={createRoute} class="absolute right-4 lg:mr-[-18px] ">
-				<button
-					class="btn variant-filled-primary w-28 rounded-lg hover:bg-primary bg-primary transition 
-          ease-in-out 
-          delay-150   
-          hover:scale-110  
-          duration-300 ... "
-				>
-					Add new
-				</button>
-			</a>
-		</div>
-	</div>
+<div class="flex flex-wrap gap-2 mt-1">
+	<input type="text" placeholder="Search by name" class="input w-auto grow" />
+	<input type="text" placeholder="Search by duration" class="input w-auto grow" />
+	<a href={createRoute} class="btn variant-filled-secondary">Add New</a>
 </div>
 
-<div
-	class="flex flex-row mx-14 lg:mt-10 md:mt-10 sm:mt-4 mt-4 lg:gap-7 md:gap-8 sm:gap-4 gap-4 lg:flex-row md:flex-row sm:flex-col min-[280px]:flex-col"
->
-	<div class="basis-1/2 justify-center items-center ">
-		<div class="relative flex items-center">
-			<input
-				type="text"
-				placeholder="Search by name"
-				class="input input-bordered input-primary w-full"
-			/>
-		</div>
-	</div>
-	<div class="basis-1/2 justify-center items-center">
-		<div class="relative flex items-center  ">
-			<input
-				type="text"
-				placeholder="Search by duration"
-				class="input input-bordered input-primary w-full"
-			/>
-		</div>
-	</div>
-	<div class="sm:flex flex">
-		<button
-			class="btn variant-filled-primary lg:w-20 md:w-20 sm:w-20 w-20 rounded-lg bg-primary hover:bg-primary  "
-		>
-			<Fa icon={faSearch} class="text-neutral-content" size="lg" />
-		</button>
-		<a href={createRoute} class=" right-14 ">
-			<button
-				class="btn variant-filled-primary hover:bg-primary lg:hidden md:hidden block sm:w-40 w-24 ml-4 rounded-lg bg-primary transition 
-          ease-in-out 
-          delay-150   
-          hover:scale-110  
-          duration-300 ...  "
-			>
-				ADD NEW
-			</button>
-		</a>
-	</div>
-</div>
-<div class="flex justify-center flex-col mt-4 mx-10 overflow-y-auto ">
-	<table class="table rounded-b-none">
-		<thead class="sticky top-0">
+<div class="table-container my-2 !border !border-secondary-100 dark:!border-surface-700">
+	<table class="table">
+		<thead class="!variant-soft-secondary">
 			<tr>
-				<th style="width: 7%;">Id</th>
-				<th style="width: 22%;">Name</th>
-				<th style="width: 38%;">Description</th>
-				<th style="width: 33%;">Duration</th>
+				<th>Id</th>
+				<th>Name</th>
+				<th>Description</th>
+				<th>Duration</th>
+				<th />
+				<th />
 			</tr>
 		</thead>
-	</table>
-	<div class=" overflow-y-auto h-[600px] bg-tertiary-500">
-		<table class="table w-full">
-			<tbody class="">
-				{#each $dataTableStore.filtered as row, rowIndex}
-					<tr>
-						<td style="width: 7%;">{rowIndex + 1}</td>
-						<td style="width: 22%;">{row.Name}</td>
-						<td style="width: 38%;">{row.Description}</td>
-						<td style="width: 33%;">{row.DurationInMins}</td>
-						<td style="width: 33%;">
-							<a href="/users/${userId}/courses/${courseId}/modules/{row.id}/edit"
-								><Fa icon={faPencil} style="color-text-primary" size="md" /></a
+		<tbody class="!bg-white dark:!bg-inherit">
+			{#each retrivedCourseModule as row, rowIndex}
+				<tr class="!border-b !border-b-secondary-100 dark:!border-b-surface-700">
+					<td>{rowIndex + 1}</td>
+					<td>{row.Name}</td>
+					<td>{row.Description}</td>
+					<td>{row.DurationInMins}</td>
+					<td>
+						<a
+							href="/users/${userId}/courses/${courseId}/modules/{row.id}/edit"
+							class="btn p-2 -my-1 hover:variant-soft-primary"
+						>
+							<Icon icon="material-symbols:edit-outline" class="text-lg" />
+						</a>
+					</td>
+					<td>
+						<Confirm
+							confirmTitle="Delete"
+							cancelTitle="Cancel"
+							let:confirm={confirmThis}
+							on:delete={(e) => handleModuleDelete(e, row.id)}
+						>
+							<button
+								on:click|preventDefault={() => confirmThis(handleModuleDelete, row.id)}
+								class="btn p-2 -my-1 hover:variant-soft-error"
 							>
-						</td>
-						<td>
-							<Confirm
-								confirmTitle="Delete"
-								cancelTitle="Cancel"
-								let:confirm={confirmThis}
-								on:delete={(e) => {
-									handleModuleDelete(e, row.id);
-								}}
-							>
-								<button
-									on:click|preventDefault={() => confirmThis(handleModuleDelete, row.id)}
-									class=""><Fa icon={faTrash} /></button
-								>
+								<Icon icon="material-symbols:delete-outline-rounded" class="text-lg" />
+							</button>
 
-								<span slot="title"> Delete </span>
-								<span slot="description"> Are you sure you want to delete a module? </span>
-							</Confirm>
-						</td>
-					</tr>
-				{/each}
-			</tbody>
-		</table>
-	</div>
-	<div class=" w-full bg-secondary-500 h-36 lg:h-16 md:h-16 sm:h-36 mb-10 pt-1 rounded-b-lg ">
-		{#if $dataTableStore.pagination}<Paginator
-				class="mt-2 mr-3 ml-3 "
-				buttonClasses="btn-icon bg-surface-500 w-5 h-8"
-				text="text-white"
-				bind:settings={$dataTableStore.pagination}
-			/>{/if}
-	</div>
+							<span slot="title">Delete</span>
+							<span slot="description">Are you sure you want to delete a module?</span>
+						</Confirm>
+					</td>
+				</tr>
+			{/each}
+		</tbody>
+	</table>
 </div>
-<!-- </div> -->
+
+<div class="w-full variant-soft-secondary rounded-lg p-2">
+	<Paginator
+		bind:settings={paginationSettings}
+		on:page={onPageChange}
+		on:amount={onAmountChange}
+		buttonClasses=" text-primary-500"
+		regionControl = 'bg-surface-100 rounded-lg btn-group text-primary-500 border border-primary-200'
+		controlVariant = 'rounded-full text-primary-500 '
+		controlSeparator = 'fill-primary-400'
+		/>
+</div>

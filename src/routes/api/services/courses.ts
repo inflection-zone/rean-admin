@@ -25,7 +25,7 @@ export const getCourseById = async (sessionId: string, courseId: string) => {
 	return await get_(sessionId, url, true);
 };
 
-export const searchCourses = async (sessionId: string, searchParams?: any) => {
+export const searchCourses = async (sessionId: string, searchParams?) => {
 	let searchString = '';
 	if (searchParams) {
 		const keys = Object.keys(searchParams);

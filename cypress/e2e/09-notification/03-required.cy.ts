@@ -21,9 +21,9 @@ describe('test', () => {
       // eslint-disable-next-line no-useless-escape
       cy.contains('Notifications').click()
       cy.wait(2000)
-      cy.get('.absolute > .btn').click()
+      cy.contains('Add New').click()
       cy.wait(2000)
-      cy.get('input[name=title]').type('ntitlegvfv')
+      cy.get('input[name=title]').type('You can now limit credit card numbers by card type and country.')
       cy.wait(2000)
       cy.get('button[type=submit]').click()
       cy.wait(2000)
@@ -31,7 +31,7 @@ describe('test', () => {
       cy.wait(2000)
       cy.get('button[type=submit]').click()
       cy.wait(2000)
-      cy.get(':nth-child(1) > .text-primary-primary-500').click()
+      cy.contains('Notifications').click()
     })
 	});
  

@@ -4,7 +4,6 @@ import login from '../pageObjects/login/login-test';
 
 describe('test', () => {
 	it.only('LoginTest', function () {
-    const filePath = 'image.jpg';
 		cy.visit('http://localhost:5173/');
 
 		cy.fixture('login').then((data) => {
@@ -22,7 +21,7 @@ describe('test', () => {
       cy.wait(2000)
       cy.contains('Courses').click()
       cy.wait(2000)
-      cy.get('.absolute > .btn').click()
+      cy.contains('Add New').click()
       cy.wait(2000)
       cy.get('input[name=name]').type('cname')
       cy.wait(2000)
@@ -36,19 +35,11 @@ describe('test', () => {
       cy.wait(2000)
       cy.contains('Add Content').click()
       cy.wait(2000)
-      cy.get('input[name=title]').type('hgfgh')
-      cy.wait(2000)
-      cy.get('select[name=contentType]').select('Text')
-      cy.wait(2000)
-      cy.get('input[name=fileInput]').attachFile(filePath)
+      cy.get('input[name=title]').type('English Grammer')
       cy.wait(2000)
       cy.get('button[type=submit]').click()
       cy.wait(2000)
-      cy.get('button[type=submit]').click()
-      cy.wait(2000)
-      cy.get('input[name=durationInMins]').type('-4')
-      cy.wait(2000)
-      cy.get('input[name=sequence]').type('11')
+      cy.contains('Edit').click()
       cy.wait(2000)
       cy.get('button[type=submit]').click()
       cy.wait(2000)
@@ -56,7 +47,7 @@ describe('test', () => {
       cy.wait(2000)
       cy.contains('Courses').click()
       cy.wait(2000)
-      cy.get(':nth-child(1) > .text-primary-primary-500').click()
+      cy.contains('Courses').click()
     })
 	});
  

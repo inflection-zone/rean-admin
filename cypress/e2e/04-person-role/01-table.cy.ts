@@ -19,9 +19,9 @@ describe('test', () => {
       // eslint-disable-next-line no-useless-escape
       cy.contains('Types').click()
       cy.wait(2000)
-      cy.contains('Person-Role').click()
+      cy.contains('Person Role').click()
       cy.wait(2000)
-      cy.get(':nth-child(2) > :nth-child(5) > a > .svelte-fa').click()
+      cy.get(':nth-child(2) > :nth-child(5) > .btn > .text-lg').click()
       cy.wait(2000)
       cy.get('input[name=roleName]').clear()
       cy.wait(2000)
@@ -33,7 +33,7 @@ describe('test', () => {
       cy.wait(2000)
       cy.get('button[type=submit]').click()
       cy.wait(2000)
-      cy.get(':nth-child(1) > .text-primary-primary-500').click()
+      cy.contains('Person-Roles').click()
       cy.wait(2000)
       cy.contains('→').scrollIntoView()
       cy.wait(2000)
@@ -45,8 +45,7 @@ describe('test', () => {
       cy.wait(2000)
       cy.get('select').select('10')
       cy.wait(2000)
-      cy.get('.app-bar-slot-lead > .flex').scrollIntoView()
-      cy.wait(2000)
+      cy.contains('Person-Roles').scrollIntoView()
     })
 	});
  

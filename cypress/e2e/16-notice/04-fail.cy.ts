@@ -17,14 +17,12 @@ describe('test', () => {
     cy.wait(3000)
       cy.get('.app-bar-slot-lead > .flex').click()
       cy.wait(2000)
-      cy.get('.justify-end > .svelte-fa').click()
-      cy.wait(2000)
       cy.contains('Miscellaneous').click()
       cy.wait(2000)
       // eslint-disable-next-line no-useless-escape
       cy.contains('Notices').click()
       cy.wait(2000)
-      cy.get('.absolute > .btn').click()
+      cy.contains('Add New').click()
       cy.wait(2000)
       cy.get('textarea[name=description]').type('dsvdsvds')
       cy.wait(2000)
@@ -37,7 +35,8 @@ describe('test', () => {
       cy.get('input[name=fileinput]').attachFile(filePath)
       cy.wait(2000)
       cy.get('button[type=submit]').click()
-      cy.wait(2000)
+      cy.wait(7000)
+      cy.contains('Notices').click()
     })
 	});
  

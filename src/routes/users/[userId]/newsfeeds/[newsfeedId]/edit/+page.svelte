@@ -1,16 +1,14 @@
 <script lang="ts">
-	import Fa from 'svelte-fa';
-	import { faMultiply } from '@fortawesome/free-solid-svg-icons';
-	import type { PageServerData } from './$types';
+	import { page } from '$app/stores';
 	import BreadCrumbs from '$lib/components/breadcrumbs/breadcrums.svelte';
 	import Image from '$lib/components/image.svelte';
 	import { showMessage } from '$lib/utils/message.utils';
+	import Icon from '@iconify/svelte';
+	import InputChip from '$lib/components/input-chips.svelte';
 	import date from 'date-and-time';
-	import { page } from '$app/stores';
-	import { InputChip } from '@skeletonlabs/skeleton';
+	import type { PageServerData } from './$types';
 
-	let retrievedTags = '';
-	let tagsPlaceholder = 'Enter a tags here...';
+	/////////////////////////////////////////////////////////////////////////
 
 	export let form;
 	export let data: PageServerData;
@@ -109,171 +107,104 @@
 	};
 </script>
 
-<main class="h-screen mb-96">
-	<BreadCrumbs crumbs={breadCrumbs} />
+<BreadCrumbs crumbs={breadCrumbs} />
 
-	<div class="">
-		<form
-			method="post"
-			action="?/updateNewsfeedAction"
-			class="w-full  bg-[#ECE4FC] lg:mt-10 md:mt-8 sm:mt-6 mb-10 mt-4 lg:max-w-4xl md:max-w-xl sm:max-w-lg  rounded-lg mx-auto"
-		>
-			<div class="w-full  h-14 rounded-t-lg p-3  bg-[#7165E3]">
-				<div class="ml-3 relative flex flex-row text-white text-xl">
-					Edit Newsfeed
-					<a href={viewRoute}>
-						<Fa icon={faMultiply} size="lg" class="absolute right-0 pr-3 mb-16 text-white " /></a
-					>
-				</div>
-			</div>
-			<div class="hidden">{id}</div>
-			<div class="flex items-center mb-4 mt-10 lg:mx-16 md:mx-12 mx-10">
-				<div class="w-1/2 md:w-1/3 lg:w-1/3 ">
-					<!-- svelte-ignore a11y-label-has-associated-control -->
-					<label class="label">
-						<span>Title *</span>
-					</label>
-				</div>
-				<div class="w-1/2 md:w-2/3 lg:w-2/3">
+<form
+	method="post"
+	action="?/updateNewsfeedAction"
+	class="table-container my-2 border border-secondary-100 dark:!border-surface-700"
+>
+	<table class="table">
+		<thead class="!variant-soft-secondary">
+			<tr>
+				<th>Edit Newsfeed</th>
+				<th class="text-end">
+					<a href={viewRoute} class="btn p-2 -my-2 variant-soft-secondary">
+						<Icon icon="material-symbols:close-rounded" class="text-lg" />
+					</a>
+				</th>
+			</tr>
+		</thead>
+		<tbody class="!bg-white dark:!bg-inherit">
+			<tr class="!border-b !border-b-secondary-100 dark:!border-b-surface-700">
+				<td>Title *</td>
+				<td>
 					<input
 						type="text"
 						name="title"
 						required
 						bind:value={title}
 						placeholder="Enter title here..."
-						class="input w-full {form?.errors?.title
-							? 'border-error-300 text-error-500'
-							: 'border-primary-200 text-primary-500'}"
+						class="input w-full {form?.errors?.title ? 'border-error-300 text-error-500' : ''}"
 					/>
 					{#if form?.errors?.title}
 						<p class="text-error-500 text-xs">{form?.errors?.title[0]}</p>
 					{/if}
-				</div>
-			</div>
-
-			<div class="flex items-start mb-2 lg:mx-16 md:mx-12 mx-10">
-				<div class="w-1/2 md:w-1/3 lg:w-1/3 ">
-					<!-- svelte-ignore a11y-label-has-associated-control -->
-					<label class="label">
-						<span>Description</span>
-					</label>
-				</div>
-				<div class="w-1/2 md:w-2/3 lg:w-2/3">
+				</td>
+			</tr>
+			<tr class="!border-b !border-b-secondary-100 dark:!border-b-surface-700">
+				<td class="align-top">Description</td>
+				<td>
 					<textarea
 						name="description"
 						bind:value={description}
 						placeholder="Enter description here..."
-						class="textarea w-full {form?.errors?.description
-							? 'border-error-300 text-error-500'
-							: 'border-primary-200 text-primary-500'}"
+						class="textarea"
 					/>
-					{#if form?.errors?.description}
-						<p class="text-error-500 text-xs">{form?.errors?.description[0]}</p>
-					{/if}
-				</div>
-			</div>
-
-			<div class="flex items-center mb-4 lg:mx-16 md:mx-12 mx-10">
-				<div class="w-1/2 md:w-1/3 lg:w-1/3 ">
-					<!-- svelte-ignore a11y-label-has-associated-control -->
-					<label class="label">
-						<span>Category</span>
-					</label>
-				</div>
-				<div class="w-1/2 md:w-2/3 lg:w-2/3">
+				</td>
+			</tr>
+			<tr class="!border-b !border-b-secondary-100 dark:!border-b-surface-700">
+				<td>Category</td>
+				<td>
 					<input
 						type="text"
 						name="category"
 						bind:value={category}
 						placeholder="Enter category here..."
-						class="input w-full {form?.errors?.category
-							? 'border-error-300 text-error-500'
-							: 'border-primary-200 text-primary-500'}"
+						class="input"
 					/>
-					{#if form?.errors?.category}
-						<p class="text-error-500 text-xs">{form?.errors?.category[0]}</p>
-					{/if}
-				</div>
-			</div>
-
-			<div class="flex items-center mb-4 lg:mx-16 md:mx-12 mx-10">
-				<div class="w-1/2 md:w-1/3 lg:w-1/3 ">
-					<!-- svelte-ignore a11y-label-has-associated-control -->
-					<label class="label">
-						<span>Link</span>
-					</label>
-				</div>
-				<div class="w-1/2 md:w-2/3 lg:w-2/3">
+				</td>
+			</tr>
+			<tr class="!border-b !border-b-secondary-100 dark:!border-b-surface-700">
+				<td>Link</td>
+				<td>
 					<input
 						type="url"
 						name="link"
 						bind:value={link}
-						placeholder="Enter link here..."
-						class="input w-full {form?.errors?.link
-							? 'border-error-300 text-error-500'
-							: 'border-primary-200 text-primary-500'}"
+						placeholder="Enter copyright here..."
+						class="input"
 					/>
-					{#if form?.errors?.link}
-						<p class="text-error-500 text-xs">{form?.errors?.link[0]}</p>
-					{/if}
-				</div>
-			</div>
-
-			<div class="flex items-center mb-4 lg:mx-16 md:mx-12 mx-10">
-				<div class="w-1/2 md:w-1/3 lg:w-1/3 ">
-					<!-- svelte-ignore a11y-label-has-associated-control -->
-					<label class="label">
-						<span>Language *</span>
-					</label>
-				</div>
-				<div class="w-1/2 md:w-2/3 lg:w-2/3">
+				</td>
+			</tr>
+			<tr class="!border-b !border-b-secondary-100 dark:!border-b-surface-700">
+				<td>Language *</td>
+				<td>
 					<input
 						type="text"
 						name="language"
 						required
 						bind:value={language}
 						placeholder="Enter language here..."
-						class="input w-full {form?.errors?.language
-							? 'border-error-300 text-error-500'
-							: 'border-primary-200 text-primary-500'}"
+						class="input"
 					/>
-					{#if form?.errors?.language}
-						<p class="text-error-500 text-xs">{form?.errors?.language[0]}</p>
-					{/if}
-				</div>
-			</div>
-
-			<div class="flex items-center mb-4 lg:mx-16 md:mx-12 mx-10">
-				<div class="w-1/2 md:w-1/3 lg:w-1/3 ">
-					<!-- svelte-ignore a11y-label-has-associated-control -->
-					<label class="label">
-						<span>Copyright</span>
-					</label>
-				</div>
-				<div class="w-1/2 md:w-2/3 lg:w-2/3">
+				</td>
+			</tr>
+			<tr class="!border-b !border-b-secondary-100 dark:!border-b-surface-700">
+				<td>Copyright</td>
+				<td>
 					<input
 						type="text"
 						name="copyright"
 						bind:value={copyright}
 						placeholder="Enter copyright here..."
-						class="input w-full {form?.errors?.copyright
-							? 'border-error-300 text-error-500'
-							: 'border-primary-200 text-primary-500'}"
+						class="input w-full {form?.errors?.copyright ? 'border-error-300 text-error-500' : ''}"
 					/>
-					{#if form?.errors?.copyright}
-						<p class="text-error-500 text-xs">{form?.errors?.copyright[0]}</p>
-					{/if}
-				</div>
-			</div>
-
-			<div class="flex items-start mb-4 lg:mx-16 md:mx-12 mx-10">
-				<div class="w-1/2 md:w-1/3 lg:w-1/3 ">
-					<!-- svelte-ignore a11y-label-has-associated-control -->
-					<label class="label">
-						<span>Favicon</span>
-					</label>
-				</div>
-				<div class="flex flex-row gap-4 w-1/2 md:w-2/3 lg:w-2/3 ">
+				</td>
+			</tr>
+			<tr class="!border-b !border-b-secondary-100 dark:!border-b-surface-700">
+				<td class="align-top">Favicon</td>
+				<td>
 					{#if image === 'undefined'}
 						<input
 							name="fileinput"
@@ -283,7 +214,7 @@
 							on:change={async (e) => await onFileSelected(e)}
 						/>
 					{:else}
-						<Image cls="flex h-24 w-24 rounded-lg" source={favicon} w="24" h="24" />
+						<Image cls="flex h-24 w-24 rounded-lg mb-2" source={favicon} w="24" h="24" />
 						<input
 							name="fileinput"
 							type="file"
@@ -293,32 +224,15 @@
 						/>
 					{/if}
 					<input type="hidden" name="favicon" value={favicon} />
-					{#if form?.errors?.favicon}
-						<p class="text-error-500 text-xs">{form?.errors?.favicon[0]}</p>
-					{/if}
-				</div>
-			</div>
-
-			<div class="flex items-center mb-4 lg:mx-16 md:mx-12 mx-10">
-				<div class="w-1/2 md:w-1/3 lg:w-1/3 ">
-					<!-- svelte-ignore a11y-label-has-associated-control -->
-					<label class="label">
-						<span>Updated</span>
-					</label>
-				</div>
-				<span class="span w-1/2 md:2/3 lg:2/3" id="updated"
-					>{date.format(updated, 'DD MMM YYYY')}</span
-				>
-			</div>
-
-			<div class="flex items-start my-2 mb-4 lg:mx-16 md:mx-12 mx-10">
-				<div class="w-1/2 md:w-1/3 lg:w-1/3 ">
-					<!-- svelte-ignore a11y-label-has-associated-control -->
-					<label class="label">
-						<span>Image *</span>
-					</label>
-				</div>
-				<div class="flex flex-row gap-4 w-1/2 md:w-2/3 lg:w-2/3 ">
+				</td>
+			</tr>
+			<tr class="!border-b !border-b-secondary-100 dark:!border-b-surface-700">
+				<td>Updated</td>
+				<td>{date.format(updated, 'DD MMM YYYY')}</td>
+			</tr>
+			<tr class="!border-b !border-b-secondary-100 dark:!border-b-surface-700">
+				<td class="align-top">Image</td>
+				<td>
 					{#if image === 'undefined'}
 						<input
 							name="fileInput"
@@ -328,7 +242,7 @@
 							on:change={async (e) => await onFileSelected(e)}
 						/>
 					{:else}
-						<Image cls="flex h-24 w-24 rounded-lg" source={image} w="24" h="24" />
+						<Image cls="flex h-24 w-24 rounded-lg mb-2" source={image} w="24" h="24" />
 						<input
 							name="fileinput"
 							type="file"
@@ -338,46 +252,21 @@
 						/>
 					{/if}
 					<input type="hidden" required name="image" value={image} />
-					{#if form?.errors?.image}
-						<p class="text-error-500 text-xs">{form?.errors?.image[0]}</p>
-					{/if}
-				</div>
-			</div>
-
-			<div class="flex items-start mb-4 lg:mx-16 md:mx-12 mx-10">
-				<div class="w-1/2 md:w-1/3 lg:w-1/3 ">
-					<!-- svelte-ignore a11y-label-has-associated-control -->
-					<label class="label">
-						<span>Tags</span>
-					</label>
-				</div>
-				<div class="w-1/2 md:w-2/3 lg:w-2/3">
+				</td>
+			</tr>
+			<tr class="!border-b !border-b-secondary-100 dark:!border-b-surface-700">
+				<td class="align-top">Tags</td>
+				<td>
 					<InputChip chips="variant-filled-error rounded-2xl" name="tags" bind:value={tags} />
 					{#if form?.errors?.tags}
 						<p class="text-error-500 text-xs">{form?.errors?.tags[0]}</p>
 					{/if}
-				</div>
-			</div>
-
-			<div class="flex items-center my-8 lg:mx-16 md:mx-12 mx-4 ">
-				<div class="lg:w-1/2 md:w-1/2 sm:w-1/2  w-1/3" />
-				<div class="lg:w-1/4 md:w-1/4 sm:w-1/4  w-1/3 ">
-					<button
-						type="button"
-						on:click={handleReset}
-						class="btn variant-ringed-primary text-primary-500 lg:w-40 lg:ml-8 md:ml-6 sm:ml-1 mb-10"
-					>
-						Reset</button
-					>
-				</div>
-				<div class="lg:w-1/4 md:w-1/4 sm:w-1/4 w-1/3">
-					<button
-						type="submit"
-						class="btn variant-filled-primary lg:w-40 lg:ml-8 md:ml-6 sm:ml-2 mb-10"
-						>Submit
-					</button>
-				</div>
-			</div>
-		</form>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="flex gap-2 p-2 justify-end">
+		<button type="button" on:click={handleReset} class="btn variant-soft-secondary">Reset</button>
+		<button type="submit" class="btn variant-filled-secondary">Submit</button>
 	</div>
-</main>
+</form>

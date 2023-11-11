@@ -40,7 +40,7 @@ const createOrganizationSchema = zfd.formData({
 	country: z.string().optional(),
 	postalCode: zfd.numeric(z.number().optional()),
 	imageResourceId: z.string().optional(),
-	isHealthFacility: zfd.checkbox({ trueValue: 'true' })
+	isHealthFacility: zfd.checkbox()
 });
 
 export const actions = {
@@ -81,6 +81,8 @@ export const actions = {
 		const addressesId_ = addressResponse.Data.Address.id;
 		const addressesId = addressesId_.split(',');
 
+		console.log("Address---",addressResponse.Data.Address);
+
 		if (addressResponse.Status === 'failure' || addressResponse.HttpCode !== 201) {
 			throw redirect(303, '/organizations', errorMessage(addressResponse.Message), event);
 		}
@@ -98,6 +100,7 @@ export const actions = {
 			result.isHealthFacility
 		);
 
+		console.log("Organization",response.Data.Organization);
 		const id = response.Data.Organization.id;
 
 		if (response.Status === 'failure' || response.HttpCode !== 201) {
@@ -106,7 +109,7 @@ export const actions = {
 		throw redirect(
 			303,
 			`/users/${userId}/organizations/${id}/view`,
-			successMessage(`Organization created successfully !`),
+			successMessage(`Organization created successfully!`),
 			event
 		);
 	}

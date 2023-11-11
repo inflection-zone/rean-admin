@@ -17,9 +17,11 @@ describe('test', () => {
       cy.get('.app-bar-slot-lead > .flex').click()
       cy.wait(2000)
       // eslint-disable-next-line no-useless-escape
+      cy.contains('Miscellaneous').click()
+      cy.wait(2000)
       cy.contains('Clients').click()
       cy.wait(2000)
-      cy.get('.absolute > .btn').click()
+      cy.contains('Add New').click()
       cy.wait(2000)
       cy.get('input[name=clientName]').type('cname')
       cy.wait(2000)
@@ -32,12 +34,8 @@ describe('test', () => {
       cy.get('button[type=submit]').click()
       cy.wait(2000)
       cy.get('button[type=submit]').click()
-      cy.wait(2000)
-      cy.get('input[name=password]').type('dfghjklyt')
-      cy.wait(2000)
-      cy.get('button[type=submit]').click()
-      cy.wait(2000)
-      cy.get('.mt-7 > .flex > :nth-child(2)').click()
+      cy.wait(7000)
+      cy.contains('Clients').click()
     })
 	});
  

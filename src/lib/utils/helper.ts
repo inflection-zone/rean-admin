@@ -25,13 +25,12 @@ export class Helper {
         return true;
     };
 
-    static truncateText = (text: string | null, numChars: number) => 
-    {
-        if ( text !== null) {
-            const txt = (text.length > numChars) ? text.substring(0, numChars-3) + '...': text;
+    static truncateText = (text: string | null, numChars: number) => {
+        if (text !== null && text !== undefined) {
+            const txt = (text.length > numChars) ? text.substring(0, numChars - 3) + '...' : text;
             return txt;
         }
-	}
+    };
 
     static hasProperty = (obj, prop) => {
         return Object.prototype.hasOwnProperty.call(obj, prop);
@@ -106,10 +105,10 @@ export class Helper {
         }
         const prefix = '+91-';
         if (!phone.startsWith(prefix)) {
-           return prefix + phone
+            return prefix + phone;
         }
         return phone;
-    }
+    };
 
     static isAlpha = (c) => {
         const alphas = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -141,12 +140,12 @@ export class Helper {
 
     static createResponse = (action: 'message' | 'redirect' | 'error' | 'data', content: string) => {
         return new Response(JSON.stringify({
-			action: action,
-			content: content
-		}))
+            action: action,
+            content: content
+        }));
     };
 
-    static toBase64 =  async (file): Promise<string | ArrayBuffer> => {
+    static toBase64 = async (file): Promise<string | ArrayBuffer> => {
         return new Promise((resolve, reject) => {
             const reader = new FileReader();
             reader.readAsDataURL(file);
@@ -162,10 +161,10 @@ export class Helper {
         let n = bstr.length;
         const u8arr = new Uint8Array(n);
 
-        while(n--){
+        while (n--) {
             u8arr[n] = bstr.charCodeAt(n);
         }
-        return new Blob([u8arr], {type:mime});
+        return new Blob([u8arr], { type: mime });
     };
 
     static downloadAsInlineObjectUrl = (response) => {

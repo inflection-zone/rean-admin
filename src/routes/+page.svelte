@@ -40,7 +40,7 @@
 					<form
 						method="post"
 						action="?/login"
-						class=" shadow-bottom-right p-8 pb-1 pt-5 rounded-lg mt-5 bg-tertiary-500"
+						class=" shadow-bottom-right p-8 pb-1 pt-5 rounded-lg mt-5 bg-secondary-50"
 					>
 						<!-- <input class="hidden" type="number" name="loginRoleId" value={loginRoleId}> -->
 						<div class="hidden">
@@ -57,34 +57,27 @@
 							<label class="mb-2" for="password">
 								<div class="grid grid-flow-col">
 									<span class="text-left text-primary-500">Password / OTP</span>
-									<!-- svelte-ignore a11y-click-events-have-key-events -->
-									<span class="text-right text-primary-500" on:click><b>Generate OTP</b></span>
+									<span class="text-right text-primary-500 ml-4 sm:ml-12">
+										<b>Generate OTP</b>
+									</span>
 								</div>
 							</label>
 							<input type="password" name="password" required class=" input" />
 							<!-- svelte-ignore a11y-label-has-associated-control -->
 							<label class="lable">
-								<span class=" text-primary-500"><b>Forgot Password?</b></span>
-							</label><br />
-							<button
-								type="submit"
-								class="btn bg-primary-500 w-40 ml-20 lg:ml-52 md:ml-52 sm:ml-52  h-10 mb-8 font-semibold tracking-wide rounded-lg text-surface-500 mt-6"
-							>
-								Login
-							</button>
+								<span class=" text-primary-500">
+									<b>Forgot Password?</b>
+								</span>
+							</label>
+							<br />
+							<button type="submit" class="btn variant-filled-secondary mb-6 w-full">Login</button>
 						</div>
 					</form>
 				</div>
 			</div>
 		</div>
 	</div>
-	<footer class="text-center w-full fixed bottom-0 h-11 bg-primary-500">
-		<a href="https://reanfoundation.org">
-			<p
-				class="mt-3 text-surface-500 text-sm hover:underline-offset-3 hover:underline decoration-indigo-500"
-			>
-				&#xa9; 2022 REAN Foundation
-			</p></a
-		>
+	<footer class="w-full fixed bottom-0 bg-primary-500 text-center p-2">
+		<a href="https://reanfoundation.org" class="!text-white">&#xa9; 2022 REAN Foundation</a>
 	</footer>
 </body>

@@ -19,19 +19,19 @@ describe('test', () => {
       // eslint-disable-next-line no-useless-escape
       cy.contains('Clinical').click()
       cy.wait(2000)
-      cy.contains('Drugs').click()
+      cy.contains('Drug').click()
       cy.wait(2000)
-      cy.get('.absolute > .btn').click()
+      cy.contains('Add New').click()
       cy.wait(2000)
       cy.get('input[name=drugName]').type('Dname')
       cy.wait(2000)
       cy.get('button[type=submit]').click()
       cy.wait(2000)
-      cy.get('button[type=submit]').click()
+      cy.contains('Edit').click()
       cy.wait(2000)
       cy.get('button[type=submit]').click()
       cy.wait(2000)
-      cy.get(':nth-child(1) > .text-primary-primary-500').click()
+      cy.contains('Drugs').click()
     })
 	});
  

@@ -58,7 +58,7 @@ export const actions = {
 		throw redirect(
 			303,
 			`/users/${userId}/symptoms/${id}/view`,
-			successMessage(`Symptom created successfully !`),
+			successMessage(`Symptom created successfully!`),
 			event
 		);
 	}

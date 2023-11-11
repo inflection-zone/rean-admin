@@ -20,9 +20,9 @@ describe('test', () => {
       cy.contains('Educational').click()
       cy.wait(2000)
       // eslint-disable-next-line no-useless-escape
-      cy.contains('Learning-Journeys').click()
+      cy.contains('Learning Journey').click()
       cy.wait(2000)
-      cy.get('.absolute > .btn').click()
+      cy.contains('Add New').click()
       cy.wait(2000)
       cy.get('input[name=preferenceWeight]').type('4')
       cy.wait(2000)
@@ -30,12 +30,13 @@ describe('test', () => {
       cy.wait(2000)
       cy.get('input[name=durationInDays]').type('7')
       cy.wait(2000)
-      cy.get('select[name=courseIds]').select('sdvd')
+      cy.get('input[name=courses]').type('dvd')
       cy.wait(2000)
-      cy.get('input[name=fileInput]').attachFile(filePath)
+      cy.get('input[name=fileinput]').attachFile(filePath)
       cy.wait(2000)
       cy.get('button[type=submit]').click()
-      cy.wait(2000)
+      cy.wait(7000)
+      cy.contains('Learning-Journeys').click()
     })
 	});
  

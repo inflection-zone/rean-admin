@@ -1,3 +1,8 @@
+@font-face {
+	font-family: 'Montserrat';
+	src: url('/fonts/Montserrat-VariableFont_wght.ttf');
+}
+
 /*place global styles here */
 html,
 body {
@@ -5,93 +10,54 @@ body {
 }
 /* html, body { @apply bg-white dark:bg-surface-900 text-black dark:text-white p-4; } */
 @tailwind base;
+@layer base {
+	input[type='date']::before {
+		content: attr(placeholder);
+		position: absolute;
+		color: #999999;
+	}
+
+	input[type='date'] {
+		color: #dfe7fd;
+		position: relative;
+	}
+
+	input[type='date']:focus,
+	input[type='date']:valid {
+		color: #000000;
+	}
+
+	input[type='date']:focus::before,
+	input[type='date']:valid::before {
+		content: '';
+	}
+}
 @tailwind components;
 @tailwind utilities;
+@tailwind variants;
 
-.input {
-	@apply text-primary-500 border border-primary-200 hover:border-primary-400 focus:border-primary-500 rounded-lg;
-}
-.input::placeholder {
-	@apply text-primary-300;
-}
-.textarea {
-	@apply text-primary-500 border border-primary-200 hover:border-primary-400 focus:border-primary-500;
-}
-.textarea::placeholder {
-	@apply text-primary-300;
-}
-.select {
-	@apply text-primary-500 border border-primary-200 hover:border-primary-400 focus:border-primary-500;
+.input,
+.select,
+.textarea,
+.checkbox,
+.radio {
+	@apply bg-surface-100 border-surface-200;
 }
 
-.file {
-	@apply text-primary-500;
+a {
+	@apply !no-underline;
 }
 
-.label {
-	@apply text-primary-500 font-semibold;
+/* if a is empty that is doesn't have class or has class=''  */
+a:not([class]) {
+	@apply !text-surface-900 dark:!text-surface-50;
 }
-
-.span {
-	@apply text-primary-500;
-}
-
-.input[type='file'] {
-	@apply text-[#5832a1] text-sm;
-}
-
-input[type='file']::file-selector-button {
-	@apply my-1 mx-1;
-	border: 10px solid #5832a1;
-	padding: 0.4em 0.4em;
-	border-radius: 0.2em;
-	background-color: #5832a1;
-	color: #ffffff;
-}
-
-input[type='file']::file-selector-button:hover {
-	background-color: #5832a1;
-	color: #ffffff;
-}
-
-.select optgroup option {
-	@apply pb-20 pl-4;
-}
-
-.table thead {
-	@apply bg-secondary-500 text-white sticky top-0;
-}
-.table thead th {
-	@apply sticky top-0;
-}
-.table tbody {
-	@apply bg-tertiary-500 text-primary-500 w-full;
-}
-.table tbody td {
-	@apply h-4 overflow-x-auto;
-}
-
-/*  apply text-decoration-line as none  for breadCrubms component
-*/
-.breadCrumbs-link:not(.unstyled):is(:not(.prose *)):not(.btn):not(.btn-icon):not(.app-bar a):not(
-		.logo-item
-	):not(a.card):not(.list-nav a) {
-	text-decoration-line: none;
-}
-
-/*css class for removing anchor tag underline*/
-.no-underline:not(.unstyled):is(:not(.prose *)):not(.btn):not(.btn-icon):not(.app-bar a):not(
-		.logo-item
-	):not(a.card):not(.list-nav a) {
-	text-decoration-line: none;
+a:not([class]):hover {
+	text-decoration: underline !important;
 }
 
 *::-webkit-scrollbar {
-	@apply w-[6px];
-}
-
-::-webkit-scrollbar:horizontal {
-	@apply h-[6px];
+	@apply w-[6px] h-[6px];
 }
 
 *::-webkit-scrollbar-track {
@@ -102,20 +68,4 @@ input[type='file']::file-selector-button:hover {
 	@apply bg-primary-300 rounded-md;
 	/* border-radius: 14px; */
 	/* border: 3px solid var(--primary); */
-}
-
-/* pagination left and right arrow buttons,colors,border class  */
-
-/* pagination select items box height and width class */
-
-.paginator-select {
-	@apply h-10 rounded-md;
-}
-
-a {
-	@apply no-underline;
-}
-
-.btn {
-	@apply hover:bg-primary-500 hover:text-surface-500;
 }

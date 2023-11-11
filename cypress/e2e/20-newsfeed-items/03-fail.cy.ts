@@ -20,9 +20,9 @@ describe('test', () => {
       cy.contains('Miscellaneous').click()
       cy.wait(2000)
       // eslint-disable-next-line no-useless-escape
-      cy.contains('Newsfeeds').click()
+      cy.contains('News Feed').click()
       cy.wait(2000)  
-      cy.get('.absolute > .btn').click()
+      cy.contains('Add New').click()
       cy.wait(2000)
       cy.get('input[name=title]').type('rbgfb')
       cy.wait(2000)
@@ -45,12 +45,8 @@ describe('test', () => {
       cy.get('input[name=fileinput]').attachFile(filePath)
       cy.wait(2000)
       cy.get('button[type=submit]').click()
-      cy.wait(2000)
-      cy.get('button[type=submit]').click()
-      cy.wait(2000)
-      cy.get('button[type=submit]').click()
-      cy.wait(2000)
-      cy.get(':nth-child(1) > .text-primary-primary-500').click()   
+      cy.wait(7000)
+      cy.contains('Newsfeeds').click()   
     })
 	});
  

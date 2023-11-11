@@ -1,8 +1,7 @@
 <script lang="ts">
-	import Fa from 'svelte-fa';
-	import { faMultiply } from '@fortawesome/free-solid-svg-icons';
-	import BreadCrumbs from '$lib/components/breadcrumbs/breadcrums.svelte';
 	import { page } from '$app/stores';
+	import BreadCrumbs from '$lib/components/breadcrumbs/breadcrums.svelte';
+	import Icon from '@iconify/svelte';
 	import type { PageServerData } from './$types';
 
 	export let form;
@@ -42,220 +41,121 @@
 	const drugsRoute = `/users/${userId}/drugs`;
 
 	const breadCrumbs = [
-		{
-			name: 'Drugs',
-			path: drugsRoute
-		},
-		{
-			name: 'Edit',
-			path: editRoute
-		}
+		{ name: 'Drugs', path: drugsRoute },
+		{ name: 'Edit', path: editRoute }
 	];
 </script>
 
-<main class="h-screen mb-32">
-	<BreadCrumbs crumbs={breadCrumbs} />
+<BreadCrumbs crumbs={breadCrumbs} />
 
-	<div class="">
-		<form
-			method="post"
-			action="?/updateDrugAction"
-			class="w-full  bg-[#ECE4FC] lg:mt-10 md:mt-8 sm:mt-6 mb-10 mt-4 lg:max-w-4xl md:max-w-xl sm:max-w-lg  rounded-lg mx-auto"
-		>
-			<div class="w-full  h-14 rounded-t-lg p-3  bg-[#7165E3]">
-				<div class="ml-3 relative flex flex-row text-white text-xl">
-					Edit Drug
-					<a href={viewRoute}>
-						<Fa icon={faMultiply} size="lg" class="absolute right-0 pr-3 mb-16 text-white " /></a
-					>
-				</div>
-			</div>
-			<div class="hidden">{id}</div>
-			<div class="flex items-center mb-4 mt-10 lg:mx-16 md:mx-12 mx-10">
-				<div class="w-1/2 md:w-1/3 lg:w-1/3 ">
-					<!-- svelte-ignore a11y-label-has-associated-control -->
-					<label class="label">
-						<span>Name *</span>
-					</label>
-				</div>
-				<div class="w-1/2 md:w-2/3 lg:w-2/3">
+<form
+	method="post"
+	action="?/updateDrugAction"
+	class="table-container my-2 border border-secondary-100 dark:!border-surface-700"
+>
+	<table class="table">
+		<thead class="!variant-soft-secondary">
+			<tr>
+				<th>Edit Drug</th>
+				<th class="text-end">
+					<a href={viewRoute} class="btn p-2 -my-2 variant-soft-secondary">
+						<Icon icon="material-symbols:close-rounded" class="text-lg" />
+					</a>
+				</th>
+			</tr>
+		</thead>
+		<tbody class="!bg-white dark:!bg-inherit">
+			<tr class="!border-b !border-b-secondary-100 dark:!border-b-surface-700">
+				<td>Name *</td>
+				<td>
 					<input
 						type="text"
+						class="input {form?.errors?.drugName ? 'border-error-300 text-error-500' : ''}"
 						name="drugName"
-						required
-						bind:value={drugName}
 						placeholder="Enter name here..."
-						class="input w-full {form?.errors?.drugName
-							? 'border-error-300 text-error-500'
-							: 'border-primary-200 text-primary-500'}"
+						bind:value={drugName}
+						required
 					/>
 					{#if form?.errors?.drugName}
 						<p class="text-error-500 text-xs">{form?.errors?.drugName[0]}</p>
 					{/if}
-				</div>
-			</div>
-
-			<div class="flex items-center mb-4 lg:mx-16 md:mx-12 mx-10">
-				<div class="w-1/2 md:w-1/3 lg:w-1/3 ">
-					<!-- svelte-ignore a11y-label-has-associated-control -->
-					<label class="label">
-						<span>Generic Name</span>
-					</label>
-				</div>
-				<div class="w-1/2 md:w-2/3 lg:w-2/3">
-					<select
+				</td>
+			</tr>
+			<tr class="!border-b !border-b-secondary-100 dark:!border-b-surface-700">
+				<td>Generic Name</td>
+				<td>
+					<input
+						type="text"
 						name="genericName"
-						class="select w-full"
 						bind:value={genericName}
-						placeholder="select generic name here..."
-					>
-						<option value="Paracetamol">Paracetamol</option>
-						<option value="Auto">Auto</option>
-						<option>Dark mode</option>
-						<option>Light mode</option>
-					</select>
-					{#if form?.errors?.genericName}
-						<p class="text-error-500 text-xs">{form?.errors?.genericName[0]}</p>
-					{/if}
-				</div>
-			</div>
-
-			<div class="flex items-center mb-4 lg:mx-16 md:mx-12 mx-10">
-				<div class="w-1/2 md:w-1/3 lg:w-1/3 ">
-					<!-- svelte-ignore a11y-label-has-associated-control -->
-					<label class="label">
-						<span>Ingredients</span>
-					</label>
-				</div>
-				<div class="w-1/2 md:w-2/3 lg:w-2/3">
+						placeholder="Enter generic name here..."
+						class="input"
+					/>
+				</td>
+			</tr>
+			<tr class="!border-b !border-b-secondary-100 dark:!border-b-surface-700">
+				<td>Ingredients</td>
+				<td>
 					<input
 						type="text"
 						name="ingredients"
 						bind:value={ingredients}
 						placeholder="Enter ingredients here..."
-						class="input w-full  {form?.errors?.ingredients
-							? 'border-error-300 text-error-500'
-							: 'border-primary-200 text-primary-500'}"
+						class="input"
 					/>
-					{#if form?.errors?.ingredients}
-						<p class="text-error-500 text-xs">{form?.errors?.ingredients[0]}</p>
-					{/if}
-				</div>
-			</div>
-
-			<div class="flex items-center mb-4 lg:mx-16 md:mx-12 mx-10">
-				<div class="w-1/2 md:w-1/3 lg:w-1/3 ">
-					<!-- svelte-ignore a11y-label-has-associated-control -->
-					<label class="label">
-						<span>Strength</span>
-					</label>
-				</div>
-				<div class="w-1/2 md:w-2/3 lg:w-2/3">
-					<select
-						name="strength"
-						class="select w-full"
-						bind:value={strength}
-						placeholder="select strength here..."
-					>
+				</td>
+			</tr>
+			<tr class="!border-b !border-b-secondary-100 dark:!border-b-surface-700">
+				<td>Strength</td>
+				<td>
+					<select name="strength" bind:value={strength} class="select">
 						<option value="High">High</option>
 						<option value="Auto">Auto</option>
 						<option>Medium</option>
 						<option>Low</option>
 					</select>
-					{#if form?.errors?.strength}
-						<p class="text-error-500 text-xs">{form?.errors?.strength[0]}</p>
-					{/if}
-				</div>
-			</div>
-
-			<div class="flex items-center mb-4 lg:mx-16 md:mx-12 mx-10">
-				<div class="w-1/2 md:w-1/3 lg:w-1/3 ">
-					<!-- svelte-ignore a11y-label-has-associated-control -->
-					<label class="label">
-						<span>Commercial Name</span>
-					</label>
-				</div>
-				<div class="w-1/2 md:w-2/3 lg:w-2/3">
+				</td>
+			</tr>
+			<tr class="!border-b !border-b-secondary-100 dark:!border-b-surface-700">
+				<td>Commercial Name</td>
+				<td>
 					<input
 						type="text"
 						name="otherCommercialNames"
 						bind:value={otherCommercialNames}
 						placeholder="Enter commercial name here..."
-						class="input w-full  {form?.errors?.otherCommercialNames
-							? 'border-error-300 text-error-500'
-							: 'border-primary-200 text-primary-500'}"
+						class="input"
 					/>
-					{#if form?.errors?.otherCommercialNames}
-						<p class="text-error-500 text-xs">{form?.errors?.otherCommercialNames[0]}</p>
-					{/if}
-				</div>
-			</div>
-
-			<div class="flex items-center mb-4 lg:mx-16 md:mx-12 mx-10">
-				<div class="w-1/2 md:w-1/3 lg:w-1/3 ">
-					<!-- svelte-ignore a11y-label-has-associated-control -->
-					<label class="label">
-						<span>Manufacture</span>
-					</label>
-				</div>
-				<div class="w-1/2 md:w-2/3 lg:w-2/3">
+				</td>
+			</tr>
+			<tr class="!border-b !border-b-secondary-100 dark:!border-b-surface-700">
+				<td>Manufacture</td>
+				<td>
 					<input
 						type="text"
 						name="manufacturer"
 						bind:value={manufacturer}
 						placeholder="Enter manufacture here..."
-						class="input w-full  {form?.errors?.manufacturer
-							? 'border-error-300 text-error-500'
-							: 'border-primary-200 text-primary-500'}"
+						class="input"
 					/>
-					{#if form?.errors?.manufacturer}
-						<p class="text-error-500 text-xs">{form?.errors?.manufacturer[0]}</p>
-					{/if}
-				</div>
-			</div>
-
-			<div class="flex items-center mb-4 lg:mx-16 md:mx-12 mx-10">
-				<div class="w-1/2 md:w-1/3 lg:w-1/3 ">
-					<!-- svelte-ignore a11y-label-has-associated-control -->
-					<label class="label">
-						<span>Other Information</span>
-					</label>
-				</div>
-				<div class="w-1/2 md:w-2/3 lg:w-2/3">
+				</td>
+			</tr>
+			<tr class="!border-b !border-b-secondary-100 dark:!border-b-surface-700">
+				<td>Other Information</td>
+				<td>
 					<input
 						type="text"
 						name="otherInformation"
 						bind:value={otherInformation}
 						placeholder="Enter other information here..."
-						class="input w-full  {form?.errors?.otherInformation
-							? 'border-error-300 text-error-500'
-							: 'border-primary-200 text-primary-500'}"
+						class="input"
 					/>
-					{#if form?.errors?.otherInformation}
-						<p class="text-error-500 text-xs">{form?.errors?.otherInformation[0]}</p>
-					{/if}
-				</div>
-			</div>
-
-			<div class="flex items-center my-8 lg:mx-16 md:mx-12 mx-4 ">
-				<div class="lg:w-1/2 md:w-1/2 sm:w-1/2  w-1/3" />
-				<div class="lg:w-1/4 md:w-1/4 sm:w-1/4  w-1/3 ">
-					<button
-						type="button"
-						on:click={handleReset}
-						class="btn variant-ringed-primary text-primary-500 lg:w-40 lg:ml-8 md:ml-6 sm:ml-1 mb-10"
-					>
-						Reset</button
-					>
-				</div>
-				<div class="lg:w-1/4 md:w-1/4 sm:w-1/4 w-1/3">
-					<button
-						type="submit"
-						class="btn variant-filled-primary lg:w-40 lg:ml-8 md:ml-6 sm:ml-2 mb-10"
-						>Submit
-					</button>
-				</div>
-			</div>
-		</form>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="flex gap-2 p-2 justify-end">
+		<button type="button" on:click={handleReset} class="btn variant-soft-secondary">Reset</button>
+		<button type="submit" class="btn variant-filled-secondary">Submit</button>
 	</div>
-</main>
+</form>

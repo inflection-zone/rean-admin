@@ -7,9 +7,7 @@
 	const onLogout = async () => {
 		const response = await fetch(`/api/server/logout`, {
 			method: 'POST',
-			headers: {
-				'content-type': 'application/json'
-			}
+			headers: { 'content-type': 'application/json' }
 		});
 
 		const resp = await response.text();
@@ -20,12 +18,7 @@
 </script>
 
 <body>
-	<Navbar
-		{userId}
-		on:logout={async () => {
-			await onLogout();
-		}}
-	>
+	<Navbar {userId} on:logout={async () => await onLogout()}>
 		<slot />
 	</Navbar>
 </body>

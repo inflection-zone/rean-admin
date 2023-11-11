@@ -66,7 +66,7 @@ export const actions = {
 		throw redirect(
 			303,
 			`/users/${userId}/knowledge-nuggets/${id}/view`,
-			successMessage(`Knowledge nuggets created successfully !`),
+			successMessage(`Knowledge nuggets created successfully!`),
 			event
 		);
 	}

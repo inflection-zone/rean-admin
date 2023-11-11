@@ -19,17 +19,15 @@ describe('test', () => {
       // eslint-disable-next-line no-useless-escape
       cy.contains('Types').click()
       cy.wait(2000)
-      cy.contains('Person-Role').click()
+      cy.contains('Person Role').click()
       cy.wait(2000)
-      cy.get('.absolute > .btn').click()
+      cy.contains('Add New').click()
       cy.wait(2000)
-      cy.get('textarea[name=description]').type('rgerge')
+      cy.get('textarea[name=description]').type('Represents a doctor/physician.')
       cy.wait(2000)
       cy.get('button[type=submit]').click()
-      cy.wait(2000)
-      // cy.get('button[type=submit]').click()
-      // cy.wait(2000)
-      // cy.get('button[type=submit]').click()
+      cy.wait(7000)
+      cy.contains('Person-Role').click()
     })
 	});
  

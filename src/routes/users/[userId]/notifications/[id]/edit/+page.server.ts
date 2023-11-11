@@ -77,7 +77,7 @@ export const actions = {
 		throw redirect(
 			303,
 			`/users/${userId}/notifications/${id}/view`,
-			successMessage(`Notification updated successfully !`),
+			successMessage(`Notification updated successfully!`),
 			event
 		);
 	}

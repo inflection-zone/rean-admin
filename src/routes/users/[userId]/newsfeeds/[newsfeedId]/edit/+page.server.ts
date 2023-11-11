@@ -89,7 +89,7 @@ export const actions = {
 		throw redirect(
 			303,
 			`/users/${userId}/newsfeeds/${id}/view`,
-			successMessage(`Newsfeed updated successfully !`),
+			successMessage(`Newsfeed updated successfully!`),
 			event
 		);
 	}

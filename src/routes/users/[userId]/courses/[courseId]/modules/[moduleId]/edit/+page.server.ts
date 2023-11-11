@@ -78,7 +78,7 @@ export const actions = {
 		throw redirect(
 			303,
 			`/users/${userId}/courses/${courseId}/modules/${id}/view`,
-			successMessage(`Module updated successfully !`),
+			successMessage(`Module updated successfully!`),
 			event
 		);
 	}

@@ -128,7 +128,7 @@ export const actions = {
 		throw redirect(
 			303,
 			`/users/${userId}/organizations/${id}/view`,
-			successMessage(`Organization updated successfully !`),
+			successMessage(`Organization updated successfully!`),
 			event
 		);
 	}

@@ -4,7 +4,6 @@ import login from '../pageObjects/login/login-test';
 
 describe('test', () => {
 	it.only('LoginTest', function () {
-    const filePath = 'image1.jpg';
 		cy.visit('http://localhost:5173/');
 
 		cy.fixture('login').then((data) => {
@@ -20,7 +19,7 @@ describe('test', () => {
       cy.contains('Educational').click()
       cy.wait(2000)
       // eslint-disable-next-line no-useless-escape
-      cy.contains('Learning-Journeys').click()
+      cy.contains('Learning Journey').click()
       cy.wait(2000)
       cy.get(':nth-child(2) > :nth-child(6) > a > .svelte-fa').click()
       cy.wait(2000)
@@ -44,7 +43,7 @@ describe('test', () => {
       cy.wait(2000)
       cy.get('button[type=submit]').click()
       cy.wait(2000)
-      cy.get(':nth-child(1) > .text-primary-primary-500').click()
+      cy.contains('Learning-Journeys').click()
       // cy.contains('→').scrollIntoView()
       // cy.wait(2000)
       // cy.contains('→').click()
@@ -57,17 +56,13 @@ describe('test', () => {
       // cy.wait(2000)
       // cy.get(':nth-child(1) > .relative > .input').scrollIntoView()
       cy.wait(2000)
-      cy.get(':nth-child(1) > .relative > .input').type('khtnt')
+      cy.get('input[name=name]').type('khtnt')
+      cy.wait(5000)
+      cy.get('input[name=name]').clear()
       cy.wait(2000)
-      cy.get('.lg\\:w-20').click()
-      cy.wait(2000)
-      cy.get(':nth-child(1) > .relative > .input').clear()
-      cy.wait(2000)
-      cy.get(':nth-child(2) > .relative > .input').type('2')
-      cy.wait(2000)
-      cy.get('.lg\\:w-20').click()
-      cy.wait(2000)
-      cy.get(':nth-child(2) > .relative > .input').clear()
+      cy.get('input[name=preferenceWeight]').type('2')
+      cy.wait(5000)
+      cy.get('input[name=preferenceWeight]').clear()
     })
 	});
  

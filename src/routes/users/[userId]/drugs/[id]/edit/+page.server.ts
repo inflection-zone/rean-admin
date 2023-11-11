@@ -83,7 +83,7 @@ export const actions = {
 		throw redirect(
 			303,
 			`/users/${userId}/drugs/${id}/view`,
-			successMessage(`Drug updated successfully !`),
+			successMessage(`Drug updated successfully!`),
 			event
 		);
 	}

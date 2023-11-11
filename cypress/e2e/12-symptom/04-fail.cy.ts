@@ -4,7 +4,6 @@ import login from '../pageObjects/login/login-test';
 
 describe('test', () => {
 	it.only('LoginTest', function () {
-    const filePath = 'image.jpg';
 		cy.visit('http://localhost:5173/');
 
 		cy.fixture('login').then((data) => {
@@ -22,18 +21,17 @@ describe('test', () => {
       cy.wait(2000)
       cy.contains('Symptoms').click()
       cy.wait(2000)
-      cy.get('.absolute > .btn').click()
+      cy.contains('Add New').click()
       cy.wait(2000)
       cy.get('textarea[name=description]').type('sdvdsvwsvdev')
       cy.wait(2000)
-      // cy.get('input[class=input-chip-interface space-y-4').type('svdsdvsf')
-      // cy.wait(2000)
       cy.get('button[type=submit]').click()
       cy.wait(2000)
       cy.get('input[name=symptom]').type('vsdfvds')
       cy.wait(2000)
       cy.get('button[type=submit]').click()
-      cy.wait(2000)
+      cy.wait(7000)
+      cy.contains('Symptoms').click()
     })
 	});
  

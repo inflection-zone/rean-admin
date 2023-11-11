@@ -32,7 +32,7 @@ export class SessionManager {
 	static getSession = (sessionId): Promise<Session | null> => {
 		const session = SessionManager._sessions.find((x) => x.sessionId === sessionId);
 		if (!session) return Promise.resolve(null);
-		console.log(`Retrieving existing session: ${JSON.stringify(session, null, 2)}`);
+		// console.log(`Retrieving existing session: ${JSON.stringify(session, null, 2)}`);
 		return Promise.resolve(session);
 	};
 

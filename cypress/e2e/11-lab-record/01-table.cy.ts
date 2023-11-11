@@ -21,7 +21,7 @@ describe('test', () => {
       // eslint-disable-next-line no-useless-escape
       cy.contains('Lab-Records').click()
       cy.wait(2000)
-      cy.get(':nth-child(2) > :nth-child(7) > a > .svelte-fa').click()
+      cy.get(':nth-child(2) > :nth-child(7) > .btn > .text-lg').click()
       cy.wait(2000)
       cy.get('input[name=typeName]').clear()
       cy.wait(2000)
@@ -53,7 +53,7 @@ describe('test', () => {
       cy.wait(2000)
       cy.get('button[type=submit]').click()
       cy.wait(2000)
-      cy.get(':nth-child(1) > .text-primary-primary-500').click()
+      cy.contains('Lab-Records').click()
       cy.wait(2000)
       cy.contains('→').scrollIntoView()
       cy.wait(2000)
@@ -65,8 +65,7 @@ describe('test', () => {
       cy.wait(2000)
       cy.get('select').select('10')
       cy.wait(2000)
-      cy.contains('Add new').scrollIntoView()
-      cy.wait(2000)
+      cy.contains('Lab-Records').scrollIntoView()
     })
 	});
  

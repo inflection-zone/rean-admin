@@ -93,7 +93,7 @@ export const actions = {
 		throw redirect(
 			303,
 			`/users/${userId}/learning-journeys/${learningPathId}/view`,
-			successMessage(`Learning journey created successfully !`),
+			successMessage(`Learning journey created successfully!`),
 			event
 		);
 	}

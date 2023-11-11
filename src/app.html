@@ -4,9 +4,16 @@
 		<meta charset="utf-8" />
 		<link rel="icon" href="%sveltekit.assets%/favicon.png" />
 		<meta name="viewport" content="width=device-width" />
+		<link
+			rel="preload"
+			href="%sveltekit.assets%/fonts/Montserrat-VariableFont_wght.ttf"
+			as="font"
+			type="font/ttf"
+			crossorigin
+		/>
 		%sveltekit.head%
 	</head>
 	<body>
-		<div class="h-full w-full overflow-hidden">%sveltekit.body%</div>
+		<div class="h-full w-full overflow-hidden" data-theme="customTheme">%sveltekit.body%</div>
 	</body>
 </html>

@@ -1,9 +1,8 @@
 <script lang="ts">
-	import Fa from 'svelte-fa';
-	import { faMultiply } from '@fortawesome/free-solid-svg-icons';
-	import BreadCrumbs from '$lib/components/breadcrumbs/breadcrums.svelte';
 	import { page } from '$app/stores';
+	import BreadCrumbs from '$lib/components/breadcrumbs/breadcrums.svelte';
 	import { showMessage } from '$lib/utils/message.utils';
+	import Icon from '@iconify/svelte';
 
 	////////////////////////////////////////////////////////////////////////////////////
 
@@ -16,15 +15,8 @@
 	const notificationRoute = `/users/${userId}/notifications`;
 
 	const breadCrumbs = [
-		{
-			name: 'Notifications',
-			path: notificationRoute,
-			home: true
-		},
-		{
-			name: 'Create',
-			path: createRoute
-		}
+		{ name: 'Notifications', path: notificationRoute, home: true },
+		{ name: 'Create', path: createRoute }
 	];
 
 	const upload = async (imgBase64, filename) => {
@@ -70,147 +62,88 @@
 	};
 </script>
 
-<main class="h-screen mb-10">
-	<BreadCrumbs crumbs={breadCrumbs} />
+<BreadCrumbs crumbs={breadCrumbs} />
 
-	<div class="">
-		<form
-			method="post"
-			action="?/createNotificationAction"
-			class="w-full  bg-[#ECE4FC] lg:mt-10 md:mt-8 sm:mt-6 mb-10 mt-4 lg:max-w-4xl md:max-w-xl sm:max-w-lg  rounded-lg mx-auto"
-		>
-			<div class="w-full  h-14 rounded-t-lg p-3  bg-[#7165E3]">
-				<div class="ml-3 relative flex flex-row text-white text-xl">
-					Create Notification
-					<a href={notificationRoute}>
-						<Fa
-							icon={faMultiply}
-							size="lg"
-							class="absolute right-0 lg:pr-3 md:pr-2 pr-0 text-white"
-						/>
+<form
+	method="post"
+	action="?/createNotificationAction"
+	class="table-container my-2 border border-secondary-100 dark:!border-surface-700"
+>
+	<table class="table">
+		<thead class="!variant-soft-secondary">
+			<tr>
+				<th>Create Notification</th>
+				<th class="text-end">
+					<a href={notificationRoute} class="btn p-2 -my-2 variant-soft-secondary">
+						<Icon icon="material-symbols:close-rounded" class="text-lg" />
 					</a>
-				</div>
-			</div>
-
-			<div class="flex items-center mb-4 mt-10 lg:mx-16 md:mx-12 mx-10">
-				<div class="w-1/2 md:w-1/3 lg:w-1/3 ">
-					<!-- svelte-ignore a11y-label-has-associated-control -->
-					<label class="label">
-						<span>Title *</span>
-					</label>
-				</div>
-				<div class="w-1/2 md:w-2/3 lg:w-2/3">
+				</th>
+			</tr>
+		</thead>
+		<tbody class="!bg-white dark:!bg-inherit">
+			<tr class="!border-b !border-b-secondary-100 dark:!border-b-surface-700">
+				<td>Title *</td>
+				<td>
 					<input
 						type="text"
 						name="title"
 						required
 						placeholder="Enter title here..."
-						class="input {form?.errors?.title
-							? 'border-error-300 text-error-500'
-							: 'border-primary-200 text-primary-500'}"
-						value={form?.data?.title ?? ''}
+						class="input w-full {form?.errors?.title ? 'border-error-300 text-error-500' : ''}"
 					/>
 					{#if form?.errors?.title}
 						<p class="text-error-500 text-xs">{form?.errors?.title[0]}</p>
 					{/if}
-				</div>
-			</div>
-
-			<div class="flex items-center mb-4 lg:mx-16 md:mx-12 mx-10">
-				<div class="w-1/2 md:w-1/3 lg:w-1/3 ">
-					<!-- svelte-ignore a11y-label-has-associated-control -->
-					<label class="label">
-						<span>Body</span>
-					</label>
-				</div>
-				<div class="w-1/2 md:w-2/3 lg:w-2/3">
-					<input
-						type="text"
-						name="body"
-						placeholder="Enter body here..."
-						class="input w-full {form?.errors?.body
-							? 'border-error-300 text-error-500'
-							: 'border-primary-200 text-primary-500'}"
-						value={form?.data?.body ?? ''}
-					/>
-					{#if form?.errors?.body}
-						<p class="text-error-500 text-xs">{form?.errors?.body[0]}</p>
-					{/if}
-				</div>
-			</div>
-
-			<div class="flex items-center mb-4 lg:mx-16 md:mx-12 mx-10">
-				<div class="w-1/2 md:w-1/3 lg:w-1/3 ">
-					<!-- svelte-ignore a11y-label-has-associated-control -->
-					<label class="label">
-						<span>Type</span>
-					</label>
-				</div>
-				<div class="w-1/2 md:w-2/3 lg:w-2/3">
-					<select class="select w-full" name="type" placeholder="Select type here...">
-						<option>General</option>
-						<option>Auto</option>
-						<option>Dark mode</option>
-						<option>Light mode</option>
+				</td>
+			</tr>
+			<tr class="!border-b !border-b-secondary-100 dark:!border-b-surface-700">
+				<td class="align-top">Body</td>
+				<td>
+					<textarea name="body" placeholder="Enter body here..." class="textarea" />
+				</td>
+			</tr>
+			<tr class="!border-b !border-b-secondary-100 dark:!border-b-surface-700">
+				<td>Type</td>
+				<td>
+					<select class="select w-full" name="type" placeholder="select type here...">
+						<option selected>General</option>
+						<option value="Email">Email</option>
+						<option value="SMS">SMS</option>
+						<option value="WebPush">Web Push</option>
+						<option value="MobilePush">Mobile Push</option>
+						<option value="Webhook">Webhook</option>
+						<option value="WhatsApp">Whats App</option>
+						<option value="Telegram">Telegram</option>
+						<option value="Slack">Slack</option>
 					</select>
-					{#if form?.errors?.type}
-						<p class="text-error-500 text-xs">{form?.errors?.type[0]}</p>
-					{/if}
-				</div>
-			</div>
-
-			<div class="flex items-center mb-4 lg:mx-16 md:mx-12 mx-10">
-				<div class="w-1/2 md:w-1/3 lg:w-1/3 ">
-					<!-- svelte-ignore a11y-label-has-associated-control -->
-					<label class="label">
-						<span>Broadcast To All</span>
-					</label>
-				</div>
-				<div class="w-1/2 md:w-2/3 lg:w-2/3">
-					<label class="label cursor-pointer">
-						<input
-							type="checkbox"
-							name="broadcastToAll"
-							value="true"
-							class="checkbox checkbox-primary border-primary-200 hover:border-primary-400 checkbox-md ml-2"
-						/>
-						{#if form?.errors?.broadcastToAll}
-							<p class="text-error-500 text-xs">{form?.errors?.broadcastToAll[0]}</p>
-						{/if}
-					</label>
-				</div>
-			</div>
-
-			<div class="flex items-center my-2 lg:mx-16 md:mx-12 mx-10">
-				<div class="w-1/2 md:w-1/3 lg:w-1/3 ">
-					<!-- svelte-ignore a11y-label-has-associated-control -->
-					<label class="label">
-						<span>Image</span>
-					</label>
-				</div>
-				<div class="flex flex-row gap-8 w-1/2 md:w-2/3 lg:w-2/3 ">
+				</td>
+			</tr>
+			<tr class="!border-b !border-b-secondary-100 dark:!border-b-surface-700">
+				<td>Broadcast To All</td>
+				<td>
 					<input
-						accept="image/png, image/jpeg"
-						type="file"
-						id="fileUpload"
-						class="input"
+						type="checkbox"
+						name="broadcastToAll"
+						class="checkbox checkbox-primary border-primary-200 hover:border-primary-400 checkbox-md ml-2"
+					/>
+				</td>
+			</tr>
+			<tr class="!border-b !border-b-secondary-100 dark:!border-b-surface-700">
+				<td>Image</td>
+				<td>
+					<input
 						name="fileinput"
+						type="file"
+						class="true input w-full"
 						placeholder="Image"
 						on:change={async (e) => await onFileSelected(e)}
 					/>
 					<input type="hidden" name="imageUrl" value={imageUrl} />
-					{#if form?.errors?.imageUrl}
-						<p class="text-error-500 text-xs">{form?.errors?.imageUrl[0]}</p>
-					{/if}
-				</div>
-			</div>
-
-			<div class="flex items-center mt-7 lg:mx-16 md:mx-12 mr-10">
-				<div class="w-3/4" />
-				<div class="w-1/4 ">
-					<button type="submit" class="btn variant-filled-primary w-full mb-10 "> Submit </button>
-				</div>
-			</div>
-		</form>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="flex p-2 justify-end">
+		<button type="submit" class="btn variant-filled-secondary">Submit</button>
 	</div>
-</main>
+</form>

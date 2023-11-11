@@ -47,7 +47,7 @@ export const actions = {
 		throw redirect(
 			303,
 			`/users/${userId}/goals/${id}/view`,
-			successMessage(`Goal type created successfully !`),
+			successMessage(`Goal type created successfully!`),
 			event
 		);
 	}

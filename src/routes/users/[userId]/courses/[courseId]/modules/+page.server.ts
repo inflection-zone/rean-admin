@@ -13,9 +13,9 @@ export const load: PageServerLoad = async (event: RequestEvent) => {
 		if (response.Status === 'failure' || response.HttpCode !== 200) {
 			throw error(response.HttpCode, response.Message);
 		}
-		const module = response.Data.CourseModules.Items;
+		const modules = response.Data.CourseModules;
 		return {
-			module,
+			modules,
 			sessionId,
 			message: response.Message
 		};

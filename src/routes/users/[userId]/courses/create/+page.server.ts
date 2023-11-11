@@ -52,7 +52,7 @@ export const actions = {
 		throw redirect(
 			303,
 			`/users/${userId}/courses/${courseId}/view`,
-			successMessage(`Course created successfully !`),
+			successMessage(`Course created successfully!`),
 			event
 		);
 	}

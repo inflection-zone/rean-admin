@@ -13,7 +13,7 @@ export const load: PageServerLoad = async (event: RequestEvent) => {
 		if (response.Status === 'failure' || response.HttpCode !== 200) {
 			throw error(response.HttpCode, response.Message);
 		}
-		const notice = response.Data.NoticeRecords.Items;
+		const notice = response.Data.NoticeRecords;
 		return {
 			notice,
 			sessionId,

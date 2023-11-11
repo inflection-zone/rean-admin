@@ -13,9 +13,9 @@ export const load: PageServerLoad = async (event: RequestEvent) => {
 		if (response.Status === 'failure' || response.HttpCode !== 200) {
 			throw error(response.HttpCode, response.Message);
 		}
-		const drug = response.Data.Drugs.Items;
+		const drugs = response.Data.Drugs;
 		return {
-			drug,
+		 drugs,
 			sessionId,
 			message: response.Message
 		};

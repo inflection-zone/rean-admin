@@ -14,7 +14,7 @@ export const load: PageServerLoad = async (event: RequestEvent) => {
 			throw error(response.HttpCode, response.Message);
 		}
 
-		const apiClients = response.Data.ApiClientRecords.Items;
+		const apiClients = response.Data.ApiClientRecords;
 		return {
 			apiClients,
 			sessionId,

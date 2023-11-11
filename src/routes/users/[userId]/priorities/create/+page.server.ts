@@ -48,7 +48,7 @@ export const actions = {
 		throw redirect(
 			303,
 			`/users/${userId}/priorities/${id}/view`,
-			successMessage(`Priority created successfully !`),
+			successMessage(`Priority created successfully!`),
 			event
 		);
 	}

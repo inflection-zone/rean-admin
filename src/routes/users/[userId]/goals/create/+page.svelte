@@ -1,14 +1,12 @@
 <script lang="ts">
-	import Fa from 'svelte-fa';
-	import { faMultiply } from '@fortawesome/free-solid-svg-icons';
-	import { InputChip } from '@skeletonlabs/skeleton';
-	import BreadCrumbs from '$lib/components/breadcrumbs/breadcrums.svelte';
 	import { page } from '$app/stores';
+	import BreadCrumbs from '$lib/components/breadcrumbs/breadcrums.svelte';
+	import Icon from '@iconify/svelte';
+	import InputChip from '$lib/components/input-chips.svelte';
 
 	////////////////////////////////////////////////////////////////////////////////////////
 
 	export let form;
-	let tagsPlaceholder = 'Enter a tags here...';
 
 	const userId = $page.params.userId;
 	const createRoute = `/users/${userId}/goals/create`;
@@ -26,77 +24,49 @@
 	];
 </script>
 
-<main class="h-screen mb-52">
-	<BreadCrumbs crumbs={breadCrumbs} />
+<BreadCrumbs crumbs={breadCrumbs} />
 
-	<div class="">
-		<form
-			method="post"
-			action="?/createGoalAction"
-			class="w-full  bg-[#ECE4FC] lg:mt-10 md:mt-8 sm:mt-6 mb-10 mt-4 lg:max-w-4xl md:max-w-xl sm:max-w-lg  rounded-lg mx-auto"
-		>
-			<div class="w-full  h-14 rounded-t-lg p-3  bg-[#7165E3]">
-				<div class="ml-3 relative flex flex-row text-white text-xl">
-					Create Goal
-					<a href={goalRoute}>
-						<Fa
-							icon={faMultiply}
-							size="lg"
-							class="absolute right-0 lg:pr-3 md:pr-2 pr-0 text-white"
-						/>
+<form
+	method="post"
+	action="?/createGoalAction"
+	class="table-container my-2 border border-secondary-100 dark:!border-surface-700"
+>
+	<table class="table">
+		<thead class="!variant-soft-secondary">
+			<tr>
+				<th>Create Goal</th>
+				<th class="text-end">
+					<a href={goalRoute} class="btn p-2 -my-2 variant-soft-secondary">
+						<Icon icon="material-symbols:close-rounded" class="text-lg" />
 					</a>
-				</div>
-			</div>
-
-			<div class="flex items-center mb-4 mt-10 lg:mx-16 md:mx-12 mx-10">
-				<div class="w-1/2 md:w-1/3 lg:w-1/3 ">
-					<!-- svelte-ignore a11y-label-has-associated-control -->
-					<label class="label">
-						<span>Type *</span>
-					</label>
-				</div>
-				<div class="w-1/2 md:w-2/3 lg:w-2/3">
+				</th>
+			</tr>
+		</thead>
+		<tbody class="!bg-white dark:!bg-inherit">
+			<tr class="!border-b !border-b-secondary-100 dark:!border-b-surface-700">
+				<td>Type *</td>
+				<td>
 					<input
 						type="text"
 						name="type"
 						required
 						placeholder="Enter type here..."
-						class="input w-full {form?.errors?.type
-							? 'border-error-300 text-error-500'
-							: 'border-primary-200 text-primary-500'}"
-						value={form?.data?.type ?? ''}
+						class="input w-full {form?.errors?.type ? 'border-error-300 text-error-500' : ''}"
 					/>
 					{#if form?.errors?.type}
 						<p class="text-error-500 text-xs">{form?.errors?.type[0]}</p>
 					{/if}
-				</div>
-			</div>
-
-			<div class="flex items-start mb-2 lg:mx-16 md:mx-12 mx-10">
-				<div class="w-1/2 md:w-1/3 lg:w-1/3 ">
-					<!-- svelte-ignore a11y-label-has-associated-control -->
-					<label class="label">
-						<span>Tags</span>
-					</label>
-				</div>
-				<div class="w-1/2 md:w-2/3 lg:w-2/3">
-					<InputChip
-						chips="variant-filled-error rounded-2xl"
-						name="tags"
-						placeholder={tagsPlaceholder}
-					/>
-					{#if form?.errors?.tags}
-						<p class="text-error-500 text-xs">{form?.errors?.tags[0]}</p>
-					{/if}
-				</div>
-			</div>
-
-			<div class="flex items-center mt-7 lg:mx-16 md:mx-12 mr-10">
-				<div class="w-3/4" />
-				<div class="w-1/4 ">
-					<button type="submit" class="btn variant-filled-primary w-full mb-10 "> Submit </button>
-				</div>
-			</div>
-		</form>
+				</td>
+			</tr>
+			<tr class="!border-b !border-b-secondary-100 dark:!border-b-surface-700">
+				<td class="align-top">Tags</td>
+				<td>
+					<InputChip chips="variant-filled-error rounded-2xl" name="tags" />
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="flex gap-2 p-2 justify-end">
+		<button type="submit" class="btn variant-filled-secondary">Submit</button>
 	</div>
-</main>
+</form>

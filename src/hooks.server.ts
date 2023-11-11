@@ -47,7 +47,8 @@ export const handleError: HandleServerError = (obj) => {
 	return {
 		message: error?.message,
 		code: code,
-		userId: sessionUser?.userId ?? null
+		userId: sessionUser?.userId ?? null,
+		stack: error?.stack
 	};
 };
 

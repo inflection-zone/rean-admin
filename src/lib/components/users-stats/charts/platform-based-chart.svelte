@@ -28,7 +28,7 @@
 						fill: false
 					},
 					{
-						label: 'IOS users',
+						label: 'iOS users',
 						data: iOSUsersData,
 						borderColor: 'purple',
 						fill: false
@@ -44,7 +44,7 @@
 							display: false
 						},
 						ticks: {
-							color: '#5832A1' // set x-axis label color here
+							color: document.documentElement.classList.contains('dark') ? '#DED6EC' : '#5832A1' // set x-axis label color here
 						}
 					},
 					y: {
@@ -52,24 +52,24 @@
 							display: false
 						},
 						ticks: {
-							color: '#5832A1' // set y-axis label color here
+							color: document.documentElement.classList.contains('dark') ? '#DED6EC' : '#5832A1' // set y-axis label color here
 						}
 					}
 				},
 				layout: {
-          padding: {
-            bottom: 20, // Adjust the bottom padding value as needed
-          },
-        },
+					padding: {
+						bottom: 20 // Adjust the bottom padding value as needed
+					}
+				},
 				plugins: {
 					legend: {
 						display: true,
 						position: 'top',
 						align: 'center',
 						labels: {
-							color: '#5832A1',
-							boxWidth:10,
-							boxHeight:10,
+							color: document.documentElement.classList.contains('dark') ? '#DED6EC' : '#5832A1',
+							boxWidth: 10,
+							boxHeight: 10
 						}
 					}
 				}

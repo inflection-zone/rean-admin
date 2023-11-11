@@ -1,17 +1,16 @@
 <script lang="ts">
-	import Fa from 'svelte-fa';
-	import { faCopy, faMultiply, faPen } from '@fortawesome/free-solid-svg-icons';
-	import { onMount } from 'svelte';
-	import { show, showMessage } from '$lib/utils/message.utils';
-	import { LocalStorageUtils } from '$lib/utils/local.storage.utils';
-	import type { PageServerData } from './$types';
-	import BreadCrumbs from '$lib/components/breadcrumbs/breadcrums.svelte';
 	import { page } from '$app/stores';
+	import BreadCrumbs from '$lib/components/breadcrumbs/breadcrums.svelte';
 	import Modalform from '$lib/components/modal/form.modal.svelte';
-	import { showGetApiKeyModal, showRenewApiKeyModal } from '$lib/store/general.store';
 	import RenewApiKeyModal from '$lib/components/modal/renew.api.key.modal.svelte';
+	import { showGetApiKeyModal, showRenewApiKeyModal } from '$lib/store/general.store';
+	import Icon from '@iconify/svelte';
 	import { clipboard } from '@skeletonlabs/skeleton';
+	import type { PageServerData } from './$types';
+	import toast from 'svelte-french-toast';
 
+	////////////////////////////////////////////////////////////////////////////////////
+	
 	export let data: PageServerData;
 	let id = data.apiClient.id;
 	let clientName = data.apiClient.ClientName;
@@ -19,18 +18,10 @@
 	let phone = data.apiClient.Phone;
 	let email = data.apiClient.Email;
 	let apiKey = undefined;
-
-	onMount(() => {
-		show(data);
-		LocalStorageUtils.removeItem('prevUrl');
-	});
-
 	let copied = false;
 	function onClickHandler(): void {
 		copied = true;
-		setTimeout(() => {
-			copied = false;
-		}, 1000);
+		setTimeout(() => (copied = false), 1000);
 	}
 
 	const userId = $page.params.userId;
@@ -39,14 +30,8 @@
 	const apiClientRoute = `/users/${userId}/api-clients`;
 
 	const breadCrumbs = [
-		{
-			name: 'Clients',
-			path: apiClientRoute
-		},
-		{
-			name: 'View',
-			path: viewRoute
-		}
+		{ name: 'Clients', path: apiClientRoute },
+		{ name: 'View', path: viewRoute }
 	];
 
 	const onUpdateApiKey = async (userName: string, password: string, validFrom, validTill) => {
@@ -66,54 +51,42 @@
 		const response = await fetch(`/api/server/api-client/renew-api-key`, {
 			method: 'POST',
 			body: JSON.stringify(model),
-			headers: {
-				'content-type': 'application/json'
-			}
+			headers: { 'content-type': 'application/json' }
 		});
 		const resp = await response.text();
 		const apiKeyDetails = JSON.parse(resp);
 		apiKey = apiKeyDetails.ApiKey;
 		console.log(response);
 		if (response.status !== 200) {
-			showMessage(`Provide valid credentials !`, 'error', true, 3500);
+			toast.error(`Provide valid credentials !`);
 		}
-		showMessage(`Client api keys renewed successfully!`, 'success', true, 3500);
+		toast.success(`Client api keys renewed successfully!`);
 	}
 
 	const onFormSubmit = async (userName, password) => {
 		console.log('userName', userName);
 		console.log('password', password);
-		await getApiKey({
-			clientCode,
-			userName: userName,
-			password: password
-		});
+		await getApiKey({ clientCode, userName: userName, password: password });
 	};
 
 	async function getApiKey(model) {
 		const response = await fetch(`/api/server/api-client/get-api-key`, {
 			method: 'POST',
 			body: JSON.stringify(model),
-			headers: {
-				'content-type': 'application/json'
-			}
+			headers: { 'content-type': 'application/json' }
 		});
 		const resp = await response.text();
 		const apiKeyDetails = JSON.parse(resp);
 		apiKey = apiKeyDetails.ApiKey;
 		console.log(response);
 		if (response.status !== 200) {
-			showMessage(`Provide valid credentials !`, 'error', true, 3500);
+			toast.error(`Provide valid credentials !`);
 		}
-		showMessage(`Client api keys retrieved successfully!`, 'success', true, 3500);
+		toast.success(`Client api keys retrieved successfully!`);
 	}
 </script>
 
-<Modalform
-	on:submit={async (e) => {
-		await onFormSubmit(e.detail.userName, e.detail.password);
-	}}
-/>
+<Modalform on:submit={async (e) => await onFormSubmit(e.detail.userName, e.detail.password)} />
 
 <RenewApiKeyModal
 	on:updateApiKey={async (e) => {
@@ -126,108 +99,74 @@
 	}}
 />
 
-<main class="h-screen mb-10">
-	<BreadCrumbs crumbs={breadCrumbs} />
+<BreadCrumbs crumbs={breadCrumbs} />
 
-	<div class="">
-		<div
-			class="w-full bg-[#ECE4FC] lg:mt-10 md:mt-8 sm:mt-6 mb-10 mt-4 lg:max-w-4xl md:max-w-xl sm:max-w-lg  rounded-lg mx-auto"
-		>
-			<div class="w-full  h-14 rounded-t-lg p-3  bg-[#7165E3]">
-				<div class="ml-3 relative flex flex-row text-white lg:text-xl text-lg ">
-					<div class="lg:hidden md:hidden block">View Api Client</div>
-					<div class="lg:block md:block hidden">View Api Client</div>
-					<a href={apiClientRoute}>
-						<Fa icon={faMultiply} size="lg" class="absolute right-0 lg:pr-3 pr-0 text-white" />
+<div class="flex flex-wrap gap-2">
+	<button
+		class="btn variant-soft-secondary ml-auto"
+		on:click|capture={() => showRenewApiKeyModal.set(true)}
+	>
+		Update API key
+	</button>
+	<button class="btn variant-soft-secondary" on:click|capture={() => showGetApiKeyModal.set(true)}>
+		Get API key
+	</button>
+	<a href={editRoute} class="btn variant-filled-secondary">
+		<Icon icon="material-symbols:edit-outline" />
+		<span>Edit</span>
+	</a>
+</div>
+
+<div class="table-container my-2 border border-secondary-100 dark:border-surface-700">
+	<table class="table">
+		<thead class="!variant-soft-secondary">
+			<tr>
+				<th>View Client</th>
+				<th class="text-end">
+					<a href={apiClientRoute} class="btn p-2 -my-2 variant-soft-secondary">
+						<Icon icon="material-symbols:close-rounded" class="text-lg" />
 					</a>
-				</div>
-			</div>
-			<div class="hidden">{id}</div>
-			<div class="flex items-center mb-4 mt-10 lg:mx-16 md:mx-12 mx-10">
-				<div class="w-1/2 md:w-1/3 lg:w-1/3 ">
-					<!-- svelte-ignore a11y-label-has-associated-control -->
-					<label class="label">
-						<span>Client Name</span>
-					</label>
-				</div>
-				<span class="span w-1/2 md:2/3 lg:2/3" id="clientName">{clientName}</span>
-			</div>
-			<div class="flex items-center my-4 lg:mx-16 md:mx-12 mx-10">
-				<div class="w-1/2 md:w-1/3 lg:w-1/3 ">
-					<!-- svelte-ignore a11y-label-has-associated-control -->
-					<label class="label">
-						<span>Client Code</span>
-					</label>
-				</div>
-				<span class="span w-1/2 md:2/3 lg:2/3" id="password">{clientCode}</span>
-			</div>
-
-			<div class="flex items-center my-4 lg:mx-16 md:mx-12 mx-10">
-				<div class="w-1/2 md:w-1/3 lg:w-1/3 ">
-					<!-- svelte-ignore a11y-label-has-associated-control -->
-					<label class="label">
-						<span>Contact Number</span>
-					</label>
-				</div>
-				<span class="span w-1/2 md:2/3 lg:2/3" id="phone">{phone}</span>
-			</div>
-
-			<div class="flex items-center my-4 lg:mx-16 md:mx-12 mx-10">
-				<div class="w-1/2 md:w-1/3 lg:w-1/3 ">
-					<!-- svelte-ignore a11y-label-has-associated-control -->
-					<label class="label">
-						<span>Email</span>
-					</label>
-				</div>
-				<span class="span w-1/2 md:2/3 lg:2/3" id="email">{email}</span>
-			</div>
-
+				</th>
+			</tr>
+		</thead>
+		<tbody class="!bg-white dark:!bg-inherit">
+			<tr class="!border-b !border-b-secondary-100 dark:!border-b-surface-700">
+				<td>Client Name</td>
+				<td>{clientName}</td>
+			</tr>
+			<tr class="!border-b !border-b-secondary-100 dark:!border-b-surface-700">
+				<td>Client Code</td>
+				<td>{clientCode}</td>
+			</tr>
+			<tr class="!border-b !border-b-secondary-100 dark:!border-b-surface-700">
+				<td>Contact Number</td>
+				<td>{phone}</td>
+			</tr>
+			<tr class="!border-b !border-b-secondary-100 dark:!border-b-surface-700">
+				<td>Email</td>
+				<td>{email}</td>
+			</tr>
 			{#if apiKey === undefined}
-				<div />
+				<tr class="!border-b !border-b-secondary-100 dark:!border-b-surface-700">
+					<td>Api Key</td>
+					<td>Click on Get API key</td>
+				</tr>
 			{:else}
-				<div class="flex items-center my-4 lg:mx-16 md:mx-12 mx-10">
-					<div class="w-1/2 md:w-1/3 lg:w-1/3 ">
-						<!-- svelte-ignore a11y-label-has-associated-control -->
-						<label class="label">
-							<span>Api Key</span>
-						</label>
-					</div>
-					<div class="flex gap-3 items-center w-1/2 md:2/3 lg:2/3">
+				<tr class="!border-b !border-b-secondary-100 dark:!border-b-surface-700">
+					<td>Api Key</td>
+					<td class="flex items-center gap-2">
 						<span class="span" id="email">{apiKey}</span>
 						<button
-							class="btn variant-ringed-primary text-primary-500 "
+							class="btn p-2 variant-soft-secondary"
 							use:clipboard={apiKey}
 							on:click={onClickHandler}
-							disabled={copied}><Fa icon={faCopy} size="lg" class="" /></button
+							disabled={copied}
 						>
-					</div>
-				</div>
-			{/if}
-
-			<div class="flex max-[450px]:flex-col items-center mt-7 lg:mx-16 md:mx-12 max-[450px]:mx-5">
-				<div
-					class="flex max-[450px]:flex-col max-[450px]:mb-2 max-[450px]:last:mb-10 mb-10 w-full gap-4 max-[450px]:gap-2 mx-1 max-[450px]:mx-5"
-				>
-					<button
-						class="btn variant-ringed-primary text-primary-500 w-full"
-						on:click|capture={() => showRenewApiKeyModal.set(true)}
-					>
-						Update api key
-					</button>
-					<button
-						class="btn variant-ringed-primary text-primary-500 w-full"
-						on:click|capture={() => showGetApiKeyModal.set(true)}
-					>
-						Get api key
-					</button>
-					<a href={editRoute}>
-						<button type="submit" class="btn variant-ringed-primary w-full">
-							Edit
-							<Fa icon={faPen} size="lg" class="lg:ml-4 sm:ml-2 ml-1" />
+							<Icon icon="material-symbols:content-copy-outline-rounded" class="text-lg" />
 						</button>
-					</a>
-				</div>
-			</div>
-		</div>
-	</div>
-</main>
+					</td>
+				</tr>
+			{/if}
+		</tbody>
+	</table>
+</div>

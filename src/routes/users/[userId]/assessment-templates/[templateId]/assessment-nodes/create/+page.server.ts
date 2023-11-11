@@ -43,7 +43,7 @@ export const load: PageServerLoad = async (event: RequestEvent) => {
 const createAssessmentNodeSchema = zfd.formData({
 	nodeType: z.string(),
 	parentNodeId: z.string().uuid(),
-	title: z.string().min(3).max(256),
+	title: z.string().min(8).max(256),
 	description: z.string().optional(),
 	sequence: zfd.numeric(z.number().optional()),
 	queryType: z.string().optional(),
@@ -118,7 +118,7 @@ export const actions = {
 		throw redirect(
 			303,
 			`/users/${userId}/assessment-templates/${templateId}/assessment-nodes/${nodeId}/view`,
-			successMessage(`Assessment node created successfully !`),
+			successMessage(`Assessment node created successfully!`),
 			event
 		);
 	}

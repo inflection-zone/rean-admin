@@ -58,7 +58,7 @@ export const actions = {
 		throw redirect(
 			303,
 			`/users/${userId}/drugs/${id}/view`,
-			successMessage(`Drug created successfully !`),
+			successMessage(`Drug created successfully!`),
 			event
 		);
 	}

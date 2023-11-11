@@ -72,7 +72,7 @@ export const actions = {
 		throw redirect(
 			303,
 			`/users/${userId}/priorities/${id}/view`,
-			successMessage(`Priority updated successfully !`),
+			successMessage(`Priority updated successfully!`),
 			event
 		);
 	}

@@ -13,7 +13,7 @@ export const load: PageServerLoad = async (event: RequestEvent) => {
 		if (response.Status === 'failure' || response.HttpCode !== 200) {
 			throw error(response.HttpCode, response.Message);
 		}
-		const newsfeedItems = response.Data;
+		const newsfeedItems = response.Data.RssfeedItem.Items;
 		return {
 			newsfeedItems,
 			sessionId,

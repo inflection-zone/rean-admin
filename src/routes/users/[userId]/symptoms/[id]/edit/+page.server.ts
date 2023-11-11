@@ -90,7 +90,7 @@ export const actions = {
 		throw redirect(
 			303,
 			`/users/${userId}/symptoms/${id}/view`,
-			successMessage(`Symptom updated successfully !`),
+			successMessage(`Symptom updated successfully!`),
 			event
 		);
 	}

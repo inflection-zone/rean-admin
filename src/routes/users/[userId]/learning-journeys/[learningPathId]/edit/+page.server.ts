@@ -70,6 +70,9 @@ export const actions = {
 				errors
 			};
 		}
+		const courses = result.courseIds.map(x => x.split(','));
+		const flattenedArray = courses.flat();
+		const updatedData = { "CourseIds": flattenedArray }
 
 		const response = await updateLearningJourney(
 			sessionId,
@@ -79,7 +82,7 @@ export const actions = {
 			result.description,
 			result.durationInDays,
 			result.imageUrl,
-			result.courseIds,
+			updatedData.CourseIds,
 		);
 		const learningPathId = response.Data.LearningPath.id;
 
@@ -94,7 +97,7 @@ export const actions = {
 		throw redirect(
 			303,
 			`/users/${userId}/learning-journeys/${learningPathId}/view`,
-			successMessage(`Learning journey updated successfully !`),
+			successMessage(`Learning journey updated successfully!`),
 			event
 		);
 	}
