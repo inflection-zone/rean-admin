@@ -1,14 +1,34 @@
-import adapter from '@sveltejs/adapter-auto';
+import adapter from '@sveltejs/adapter-node';
+// import preprocess from 'svelte-preprocess';
 import { vitePreprocess } from '@sveltejs/kit/vite';
+import path from 'path';
 
-/** @type {import('@sveltejs/kit').Config} */
 const config = {
-	// Consult https://kit.svelte.dev/docs/integrations#preprocessors
+	// Consult https://github.com/sveltejs/svelte-preprocess
 	// for more information about preprocessors
-	preprocess: vitePreprocess(),
+	// preprocess: [
+	// 	preprocess({
+	// 		postcss: true
+	// 	})
+	// ],
+	extensions: ['.svelte'],
+	preprocess: [ vitePreprocess()],
+	
+	vitePlugin: {
+		inspector: true,
+	},
 
 	kit: {
-		adapter: adapter()
+		//adapter: adapter(),
+		adapter: adapter({ out: 'build' }),
+		// Only for using ngrok
+		// csrf: {
+		// 	checkOrigin: false,
+		//   },
+	  alias: {
+      $routes: path.resolve('./src/routes'),
+      $lib: path.resolve('./src/lib')
+    },
 	}
 };
 
